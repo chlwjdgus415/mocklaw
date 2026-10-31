@@ -59,6 +59,10 @@
 @media(max-width:800px){.gazette-case-grid{grid-template-columns:1fr}.gazette-publish-row{flex-direction:column}.gazette-masthead{gap:12px}.gazette-seal{height:61px;width:61px;font-size:10px}.gazette-meta{font-size:11px}}
 @media print{.app-top,.phase-rail,.teacher-head,.gazette-publish-controls,.gazette-case-grid,.gazette-metrics,.gazette-explainer,.gazette-wait,.gazette-pending,.gazette-list-head,.panel>.spread{display:none!important}.gazette-paper{box-shadow:none;max-width:100%;border:0;break-inside:avoid;page-break-inside:avoid;margin:0 auto}.panel{border:0;box-shadow:none;padding:0}.wrap{padding:0}}
 
+/* 위원회명 우선 표기: 긴 소관위원회 이름은 작은 화면에서도 잘리지 않게 */
+.member-bar h2,.groupcard b,.submission-card-title b,.board-motion,.bill-front .chip,.presidential-status strong{overflow-wrap:anywhere;word-break:keep-all}
+.member-bar h2{line-height:1.35}
+.submission-card-title{min-width:0}
 /* 1차시 학습 대상별 인터페이스 */
 .edition-intro{background:linear-gradient(110deg,#e5f3ff,#f7fcff);border:1px solid #c8dff2;border-radius:15px;padding:17px 20px;margin-bottom:16px}
 .edition-intro strong{font-size:19px;color:#184d81}.edition-intro p{margin:6px 0 0;line-height:1.7;color:#506c8d;font-size:14px}
@@ -166,6 +170,50 @@
 .student-vote-results-note{text-align:center;color:#aec5df;margin-top:12px;line-height:1.7}
 @media(min-width:621px) and (max-width:940px){.student-vote-results .seatgrid{grid-template-columns:repeat(6,minmax(0,1fr))}}
 @media(max-width:620px){.student-vote-results{padding:15px 11px}.student-vote-results .seatgrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.student-vote-results .seat span{font-size:11px}.student-vote-results .board-legend{gap:10px}}
+
+/* Speech clock occupies the original per-member voting area, without replacing the teacher dashboard. */
+.speech-timer{box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;border-radius:14px;padding:13px 17px;font-variant-numeric:tabular-nums}
+.speech-timer-label{font-size:14px;font-weight:850}
+.speech-timer-time{font-size:clamp(53px,7.1vw,91px);font-weight:950;letter-spacing:1px;line-height:1.12}
+.speech-timer-state{font-size:clamp(14px,1.5vw,18px);font-weight:850;min-height:1.5em;line-height:1.45}
+.speech-timer.teacher{background:#19385b;border:1px solid #53759e;color:#f5f8ff;height:191px;min-height:191px;margin:0}
+/* The timer replaces only the per-member voting slots; every other element stays put. */
+.board-speech-before .plenary-member-vote-area{display:none!important}
+/* Reserve the SAME 5-column x 4-row area for 1, 5 or 20 MPs. Never stretch one person's tile. */
+.plenary-voting-board .plenary-member-vote-area{height:191px;min-height:191px;max-height:191px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));grid-auto-rows:43px;gap:5px;align-content:start;justify-content:stretch;overflow-y:auto}
+.plenary-voting-board .plenary-member-vote-area .seat{height:43px;min-height:43px;max-height:43px;min-width:0;padding:5px 3px}
+.plenary-voting-board .plenary-member-vote-area .seat span{font-size:12px}
+.plenary-voting-board .plenary-member-vote-area .seat small{font-size:10px}
+@media(max-width:620px){.plenary-voting-board .plenary-member-vote-area{grid-template-columns:repeat(4,minmax(0,1fr));height:243px;min-height:243px;max-height:243px}.speech-timer.teacher{height:243px;min-height:243px}}
+.speech-timer.student{background:linear-gradient(110deg,#eaf3ff,#f6faff);border:2px solid #c9dcf1;color:#234c7f;margin:2px auto 4px;width:min(560px,100%);min-height:150px;padding:13px}
+.speech-timer.student .speech-timer-time{font-size:clamp(52px,9vw,78px)}
+.speech-timer.running.student .speech-timer-time{color:#215b9b}
+.speech-timer.paused{background:#fff3d8;border-color:#e2ba73;color:#775014}
+.speech-timer.teacher.paused{background:#5a451f;border-color:#c5a25a;color:#ffebbc}
+.speech-timer.ended{background:#fff0f0;border-color:#dfa2a2;color:#a33440}
+.speech-timer.teacher.ended{background:#572935;border-color:#c8747c;color:#fff3f3}
+.speech-timer-controls{display:inline-flex;flex-wrap:wrap;gap:7px;align-items:center}
+.speech-timer-controls button{padding:10px 13px;font-size:13px;white-space:nowrap}
+@media(max-width:720px){.speech-timer.student{min-height:135px}.speech-timer-controls{width:100%}.speech-timer-controls button{flex:1 1 auto}}
+
+/* Keep the original bill, counts, verdict and vote tiles, but fit the whole board in one display. */
+.plenary-voting-board{padding:15px 18px}
+.plenary-voting-board .board-title{font-size:clamp(24px,2.6vw,32px);line-height:1.13}
+.plenary-voting-board .board-sub{font-size:11px;margin:3px 0 10px}
+.plenary-voting-board .board-motion{padding:10px 13px;margin-bottom:9px}
+.plenary-voting-board .board-motion strong{font-size:clamp(18px,2.15vw,24px);margin:2px 0;line-height:1.25}
+.plenary-voting-board .board-motion small{font-size:11px}
+.plenary-voting-board .motion-compare{margin-top:7px;gap:9px}
+.plenary-voting-board .motion-compare span{font-size:11px}
+.plenary-voting-board .board-motion .article{max-height:64px;overflow:auto;padding:6px 8px;font-size:12px;line-height:1.4}
+.plenary-voting-board .board-reason{font-size:11px;margin:4px 0 0;line-height:1.55;max-height:19px;overflow:hidden}
+.plenary-voting-board .board-counts{gap:8px;margin-bottom:8px}
+.plenary-voting-board .board-count{padding:7px 3px}
+.plenary-voting-board .board-count small{font-size:11px}
+.plenary-voting-board .board-count b{font-size:clamp(23px,2.7vw,33px);margin-top:0}
+.plenary-voting-board .board-result{font-size:clamp(20px,2.3vw,28px);padding:8px;margin-bottom:8px}
+.plenary-voting-board .board-legend{margin-top:7px;gap:13px}
+@media(max-width:720px){.plenary-voting-board{padding:11px}.plenary-voting-board .board-motion{padding:9px}.plenary-voting-board .board-title{font-size:23px}}
 </style>
 </head>
 <body class="high-edition">
@@ -519,8 +567,8 @@
 const CASES=JSON.parse(document.getElementById('case-data').textContent);
 // 국회운영위원회의 개정 대상은 제125조제6항으로 안내하고, 제5항은 참고용 원문으로 남긴다.
 const operationCase=CASES.find(c=>c.committee==='국회운영위원회');if(operationCase)operationCase.article='제125조제6항';
-const PHASES=['상임위원회 선택','기사와 법 조항 살펴보기','우리 모둠의 개정안 만들기','법제사법위원회 검토','법안 최종 제출','본회의 · 제안 설명 및 표결','대통령 공포 · 모의 관보'];
-const PHASE_NOTES=['각 모둠이 맡을 상임위원회를 정합니다.','관련 뉴스와 바꾸려는 실제 법 조항의 원문을 읽습니다.','원래 법률 조항을 읽고 바꾸고 싶은 본문과 이유를 작성합니다.','표현과 형식을 살펴보고 최종 수정 내용을 결정합니다.','우리 모둠의 법률안을 제출하고 본회의를 준비합니다.','발표할 법안을 선택하고 제안 설명을 들은 후 표결합니다.','본회의에서 통과된 법률안을 대통령 명의로 모의 공포하고, 관보에서 확인합니다.'];
+const PHASES=['상임위원회 선택','기사와 법 조항 살펴보기','소관 위원회 개정안 만들기','법사위(법제사법위원회) 체계·자구 심사','법률안 최종 확정','본회의 · 제안 설명 및 표결','대통령 공포 · 모의 관보'];
+const PHASE_NOTES=['각 모둠이 맡을 상임위원회를 정합니다.','관련 뉴스와 바꾸려는 실제 법 조항의 원문을 읽습니다.','원래 법률 조항을 읽고 바꾸고 싶은 본문과 이유를 작성합니다.','모든 위원회가 공통으로 법제사법위원회(법사위) 체계·자구 심사를 체험합니다.','위원회 의원별 최종 확인을 거쳐 위원장이 위원회 법률안을 확정하고, 본회의 안건 선정을 준비합니다.','발표할 법안을 선택하고 제안 설명을 들은 후 표결합니다.','본회의에서 통과된 법률안을 대통령 명의로 모의 공포하고, 관보에서 확인합니다.'];
 const KEY='MOCK_PARLIAMENT_HIGH_50_V1'; // 기존 수업 기록을 그대로 이어 사용
 const SID_KEY='MOCK_PARLIAMENT_HIGH_50_MEMBER_V1';
 const MANUAL_PHASE_KEY='MOCK_PARLIAMENT_HIGH_50_MANUAL_PHASE_V1';
@@ -536,6 +584,29 @@ const me=()=>state.members[sid]||null;
 const myNum=()=>me()?.group||'';
 const myGroup=()=>state.groups[myNum()]||null;
 const getCase=id=>CASES.find(c=>c.id===id)||null;
+// Display-only committee names: underlying group numbers / Supabase RPC IDs stay intact.
+function confirmedCommitteeOf(no){
+ const key=String(no??'').trim(),g=state.groups?.[key];
+ if(!key||!g?.caseId||!(g.done?.[0]||state.phase>0))return '';
+ return getCase(g.caseId)?.committee||'';
+}
+function groupLabel(no,showGroupNumber=false){
+ const id=String(no??'').trim();if(!id)return '미선택';
+ const committee=confirmedCommitteeOf(id);
+ return committee?(showGroupNumber?`${committee} (${id}모둠)`:committee):`${id}모둠`;
+}
+// 확정 전 조장 → 소관 상임위원회 확정 후 위원장. 권한과 서버 ID는 그대로입니다.
+function roleLabel(no){return confirmedCommitteeOf(no)?'위원장':'조장'}
+function updateJoinRoleLabel(){
+ const field=el('joinRepresentativeText'),no=el('joinGroup')?.value;
+ if(!field||!no)return;
+ const entryRoom=el('joinRoom')?.value?.trim().toUpperCase()||'';
+ // 아직 방에 입장하지 않았다면 다른 수업 방의 직책을 표시하지 않습니다.
+ const canIdentify=!!(cloudRoomReady&&entryRoom===cloudRoom);
+ const chair=canIdentify&&roleLabel(no)==='위원장';
+ field.textContent=chair?'저는 이 위원회의 위원장입니다':'저는 이 모둠의 조장입니다';
+}
+
 const myCase=()=>getCase(myGroup()?.caseId);
 const allGroups=()=>Object.entries(state.groups).sort((a,b)=>Number(a[0])-Number(b[0]));
 function cleanGroup(){return {leaderId:'',memberDone:{1:{},2:{},3:{}},caseId:'',idea:'',amend:'',reason:'',effect:'공포한 날부터',draftMethod:'replace',generatedFrom:'',reviewed:false,review:[],proposed:'',reviewMode:'',reviewChoice:'',submitted:false,done:{}}}
@@ -566,26 +637,27 @@ function logIn(){
  const no=String(number),group=ensureGroup(no);
  let id=Object.keys(state.members).find(x=>state.members[x].name===name&&state.members[x].group===no);
  if(!id)id=uid();
- if(wantsLead&&group.leaderId&&group.leaderId!==id){const old=getLeader(no);return alert(`${no}모둠의 조장은 이미 ${old?.name||'다른 의원'} 의원입니다. 일반 의원으로 입장하거나 선생님에게 조장 변경을 요청하세요.`)}
+ if(wantsLead&&group.leaderId&&group.leaderId!==id){const old=getLeader(no);return alert(`${groupLabel(no,true)}의 ${roleLabel(no)}은 이미 ${old?.name||'다른 의원'} 의원입니다. 일반 의원으로 입장하거나 선생님에게 ${roleLabel(no)} 변경을 요청하세요.`)}
  state.members[id]={id,name,group:no};
  if(wantsLead)group.leaderId=id;
  sid=id;sessionStorage.setItem(SID_KEY,id);save();
 }
 function logOut(){if(!confirm('다른 의원으로 들어갈까요? 작성한 법안과 표결 기록은 남아 있습니다.'))return;sid='';sessionStorage.removeItem(SID_KEY);render()}
-function legacyEntry(){return `<div class="join-wrapper"><div class="join-card"><span class="emblem">⚖ 대한민국 모의국회 · 의원 등록</span><h1>오늘은 여러분이<br>국회의원입니다!</h1><p>모둠 번호와 이름을 입력하면 의원으로 입장해요. <b>조장은 모둠의 상임위원회를 정하고 최종 법안을 제출</b>합니다. 다른 의원들은 함께 법안을 만들고 각자 활동 완료를 표시해요.</p><div class="two"><div><label for="joinGroup">모둠 번호</label><select id="joinGroup">${Array.from({length:30},(_,i)=>`<option value="${i+1}">${i+1}모둠</option>`).join('')}</select></div><div><label for="joinName">의원 이름</label><input id="joinName" maxlength="20" placeholder="예: 김민주" autocomplete="name" onkeydown="if(event.key==='Enter')logIn()"></div></div><label class="leader-check" for="joinLeader"><input id="joinLeader" type="checkbox"><span><b>저는 이 모둠의 조장입니다</b><small>상임위원회 선택·확정과 본회의 최종 제출을 맡아요. 모둠마다 한 명만 선택할 수 있어요.</small></span></label><button style="width:100%;padding:16px;font-size:18px;margin-top:18px" onclick="logIn()">국회의원으로 입장하기 →</button><p class="tiny">이름을 다시 입력하지 않고 투표할 수 있어요. 현재 파일은 같은 브라우저에서만 공동 데이터가 공유되며, 실제 기기 간 동기화는 나중에 연결해야 합니다.</p></div></div>`}
+function legacyEntry(){return `<div class="join-wrapper"><div class="join-card"><span class="emblem">⚖ 대한민국 모의국회 · 의원 등록</span><h1>오늘은 여러분이<br>국회의원입니다!</h1><p>모둠 번호와 이름을 입력하면 의원으로 입장해요. <b>조장은 모둠의 상임위원회를 정하고 최종 법률안을 확정</b>합니다. 다른 의원들은 함께 법안을 만들고 각자 활동 완료를 표시해요.</p><div class="two"><div><label for="joinGroup">모둠 번호</label><select id="joinGroup" onchange="updateJoinRoleLabel()">${Array.from({length:30},(_,i)=>`<option value="${i+1}">${i+1}모둠</option>`).join('')}</select></div><div><label for="joinName">의원 이름</label><input id="joinName" maxlength="20" placeholder="예: 김민주" autocomplete="name" onkeydown="if(event.key==='Enter')logIn()"></div></div><label class="leader-check" for="joinLeader"><input id="joinLeader" type="checkbox"><span><b id="joinRepresentativeText">저는 이 모둠의 조장입니다</b><small>상임위원회 선택과 모둠 법률안 최종 확정을 맡아요. 위원회가 확정되면 ‘위원장’으로 표시돼요. 모둠마다 한 명만 선택할 수 있어요.</small></span></label><button style="width:100%;padding:16px;font-size:18px;margin-top:18px" onclick="logIn()">국회의원으로 입장하기 →</button><p class="tiny">이름을 다시 입력하지 않고 투표할 수 있어요. 현재 파일은 같은 브라우저에서만 공동 데이터가 공유되며, 실제 기기 간 동기화는 나중에 연결해야 합니다.</p></div></div>`}
 function rails(){return `<div class="phase-rail">${PHASES.map((p,i)=>`<div class="step ${i<state.phase?'past':i===state.phase?'current':''}">${i+1}. ${E(p)}</div>`).join('')}</div>`}
-function memberHeader(){const m=me(),c=myCase();return `<div class="member-bar"><div><small>대한민국 모의국회 · 의원 활동실</small><h2>${E(m.group)}모둠 ${E(m.name)} 의원님, 환영합니다! ${isLeader()?'<span class="member-leader">★ 조장</span>':''}</h2><small>${E(PHASES[studentPhase()])} · ${E(c?.committee||'아직 상임위원회 선택 전')}</small></div><span class="member-role">${isLeader()?'모둠 대표 · 위원회 선택과 최종 제출':'모둠원 · 공동 작성과 개인별 활동 완료'}</span></div>`}
+function memberHeader(){const m=me(),c=myCase();return `<div class="member-bar"><div><small>대한민국 모의국회 · 의원 활동실</small><h2>${E(groupLabel(m.group))} ${E(m.name)} 의원님, 환영합니다! ${isLeader()?`<span class="member-leader">★ ${E(roleLabel(m.group))}</span>`:''}</h2><small>현재 단계: ${E(PHASES[studentPhase()])} · 소관 상임위원회: ${E(c?.committee||'아직 배정 전')}</small></div><span class="member-role">${isLeader()?`${E(roleLabel(m.group))} · ${confirmedCommitteeOf(m.group)?'소관 위원회 법률안 최종 확정':'상임위원회 선택과 최종 확정'}`:(confirmedCommitteeOf(m.group)?'위원회 의원':'모둠원')+' · 공동 작성과 개인별 활동 완료'}</span></div>`}
 function stageDoneButton(p){
  const g=myGroup();if(p<0||p>4)return '';
- if(p===0&&!isLeader())return `<div class="complete"><div><strong>상임위원회 확정은 조장이 해요</strong><div class="tiny">모둠원은 선택된 위원회를 확인하고, 다음 단계부터 각자 완료 표시를 할 수 있어요.</div></div><span class="chip ${g?.done?.[0]?'done':'wait'}">${g?.done?.[0]?'✓ 조장이 확정했어요':'조장 선택 기다리는 중'}</span></div>`;
+ const role=E(roleLabel(myNum()));
+ if(p===0&&!isLeader())return `<div class="complete"><div><strong>상임위원회 확정은 ${role}이 해요</strong><div class="tiny">${confirmedCommitteeOf(myNum())?'위원회 의원':'모둠원'}은 선택된 위원회를 확인하고, 다음 단계부터 각자 완료 표시를 할 수 있어요.</div></div><span class="chip ${g?.done?.[0]?'done':'wait'}">${g?.done?.[0]?`✓ ${role}이 확정했어요`:`${role} 선택 기다리는 중`}</span></div>`;
  const done=p===0?!!g?.done?.[0]:marked(g,p,sid);
- const msg=p===0?'조장이 선택한 위원회를 확정하면 선생님이 확인합니다.':p===4?'각자 최종 법률안을 확인하고 완료를 누르세요. 법률안 제출은 조장이 합니다.':'모둠원 각자가 완료를 누르면 선생님 화면에 이름별로 표시돼요.';
+ const msg=p===0?`${role}이 선택한 위원회를 확정하면 선생님이 확인합니다.`:p===4?`각자 소관 위원회의 최종 법률안을 확인하고 완료를 누르세요. 최종 확정은 ${role}이 합니다.`:(confirmedCommitteeOf(myNum())?'위원회 의원':'모둠원')+' 각자가 완료를 누르면 선생님 화면에 이름별로 표시돼요.';
  return `<div class="complete"><div><strong>${done?'✓ 완료 확인했어요':p===4?'최종 법률안을 확인했나요?':'이 활동을 마쳤나요?'}</strong><div class="tiny">${msg} 학급 전체 다음 단계는 교사가 이동합니다.</div></div><button class="${done?'outline':''}" ${done?'disabled':''} onclick="completeStage(${p})">${done?'✓ 완료 표시됨':'✓ '+(p===0?'위원회 선택 확정':p===4?'최종안 확인 완료':'내 활동 완료')}</button></div>`;
 }
 function completeStage(p){
  const g=myGroup();if(!g)return;
- if(p===0){if(!isLeader())return alert('위원회 선택 확정은 조장만 할 수 있어요.');if(!g.caseId)return alert('먼저 상임위원회를 선택하세요.');g.done[0]=true;return save()}
- if(p===1&&!g.caseId)return alert('선택된 상임위원회가 없습니다. 선생님이나 조장에게 알려 주세요.');
+ if(p===0){if(!isLeader())return alert(`위원회 선택 확정은 ${roleLabel(myNum())}만 할 수 있어요.`);if(!g.caseId)return alert('먼저 상임위원회를 선택하세요.');g.done[0]=true;return save()}
+ if(p===1&&!g.caseId)return alert(`선택된 상임위원회가 없습니다. 선생님이나 ${roleLabel(myNum())}에게 알려 주세요.`);
  if(p===2){if(!g.amend.trim()||!g.reason.trim())return alert('새로운 법률 본문과 바꾸는 이유를 작성해 주세요.');}
  if(p===3&&(!g.reviewed||!g.reviewChoice))return alert('자동 검토를 확인하고 「이대로 수정하기」 또는 「직접 수정하기」를 선택해 주세요.');
  if(p===4&&(!g.amend.trim()||!g.reason.trim()))return alert('법률안의 조문과 개정 이유를 먼저 확인해 주세요.');
@@ -593,16 +665,16 @@ function completeStage(p){
 }
 function chooseCommittee(id){
  if(studentPhase()!==0)return;
- if(!isLeader())return alert('상임위원회 선택은 조장만 할 수 있어요.');
+ if(!isLeader())return alert(`상임위원회 선택은 ${roleLabel(myNum())}만 할 수 있어요.`);
  const k=myNum(),busy=allGroups().find(([no,g])=>no!==k&&g.caseId===id);
- if(busy)return alert(busy[0]+'모둠이 이미 이 상임위원회를 맡았습니다.');
+ if(busy)return alert(groupLabel(busy[0],true)+'에서 이미 이 상임위원회를 맡았습니다.');
  const g=ensureGroup();
  if(g.caseId!==id){state.groups[k]={...cleanGroup(),leaderId:g.leaderId,caseId:id}}
  save();
 }
 function legacyCommitteeScreen(){
- const g=myGroup(),blocked=allGroups().filter(([n,x])=>n!==myNum()&&x.caseId).map(([n,x])=>x.caseId),lead=isLeader();
- return `<div class="panel"><div class="spread"><h2>우리 모둠의 상임위원회 정하기</h2><span class="chip">총 17개</span></div><p class="intro">상임위원회는 국회에서 분야별 법안을 먼저 살펴보는 곳이에요. <b>조장이 대표로 하나를 선택</b>하고, 다른 모둠이 고른 곳은 선택할 수 없어요.</p><div class="lead-info">${lead?'★ 조장님! 친구들과 의논한 뒤 위원회 하나를 선택해 주세요.':`모둠원은 선택 결과를 확인하세요. ${getLeader(myNum())?`조장: <b>${E(getLeader(myNum()).name)}</b> 의원`:'아직 조장이 정해지지 않았어요. 선생님께 알려 주세요.'}`}</div><div class="committees">${CASES.map(c=>{const occupied=blocked.includes(c.id),chosen=g?.caseId===c.id;return `<button class="committee ${chosen?'chosen':''}" onclick="chooseCommittee('${E(c.id)}')" ${occupied||!lead||!!g?.done?.[0]?'disabled':''}><strong>${E(c.committee)}</strong><small>${occupied?'다른 모둠이 선택했어요':chosen?'✓ 우리 모둠이 선택했어요':E(c.title)}</small></button>`}).join('')}</div>${g?.caseId?`<p class="intro" style="margin-top:14px"><b>선택한 위원회:</b> ${E(getCase(g.caseId)?.committee)}</p>`:''}${stageDoneButton(0)}</div>`;
+ const g=myGroup(),blocked=allGroups().filter(([n,x])=>n!==myNum()&&x.caseId).map(([n,x])=>x.caseId),lead=isLeader(),role=E(roleLabel(myNum()));
+ return `<div class="panel"><div class="spread"><h2>우리 모둠의 상임위원회 정하기</h2><span class="chip">총 17개</span></div><p class="intro">상임위원회는 국회에서 분야별 법안을 먼저 살펴보는 곳이에요. <b>${role}이 대표로 하나를 선택</b>하고, 다른 모둠이 고른 곳은 선택할 수 없어요.</p><div class="lead-info">${lead?(g?.done?.[0]?`★ ${role}님! 소관 상임위원회가 확정되었습니다.`:`★ ${role}님! 친구들과 의논한 뒤 위원회 하나를 선택해 주세요.`):`모둠원은 선택 결과를 확인하세요. ${getLeader(myNum())?`${role}: <b>${E(getLeader(myNum()).name)}</b> 의원`:`아직 ${role}이 정해지지 않았어요. 선생님께 알려 주세요.`}`}</div><div class="committees">${CASES.map(c=>{const occupied=blocked.includes(c.id),chosen=g?.caseId===c.id;return `<button class="committee ${chosen?'chosen':''}" onclick="chooseCommittee('${E(c.id)}')" ${occupied||!lead||!!g?.done?.[0]?'disabled':''}><strong>${E(c.committee)}</strong><small>${occupied?'다른 모둠이 선택했어요':chosen?'✓ 우리 모둠이 선택했어요':E(c.title)}</small></button>`}).join('')}</div>${g?.caseId?`<p class="intro" style="margin-top:14px"><b>선택한 위원회:</b> ${E(getCase(g.caseId)?.committee)}</p>`:''}${stageDoneButton(0)}</div>`;
 }
 function legacyOriginalBox(c,full=true){return `<div class="case-box"><div class="spread"><strong>📜 ${E(c.law)} ${E(c.article)} · 현행 조문 원문</strong><span class="chip">법률 원문 발췌</span></div><div class="law-raw" style="margin-top:12px">${E(c.original)}</div><p class="legal-note">${E(c.original_note||'')}</p>${full?`<div class="law-explain"><b>💬 쉽게 풀면?</b><div>${E(c.extract)}</div></div>`:''}</div>`}
 function pressLinks(c){return `<div class="linkrow"><a href="${E(c.url)}" target="_blank" rel="noopener">↗ 관련 기사 원문 보기</a><a href="${E(c.lawurl)}" target="_blank" rel="noopener">↗ 법률 전문 보기 (선택)</a></div>`}
@@ -627,26 +699,26 @@ function writingScreen(){
  return `<div class="panel"><div class="spread"><h2>우리 모둠의 일부개정법률안 만들기</h2><span class="chip">한 조항만 고쳐요</span></div><p class="intro">여러분은 법 전체를 만드는 것이 아니라 <b>${E(articleLabel(c))}</b>에서 문제를 해결할 부분만 바꾸는 국회의원이에요. 먼저 위에 있는 실제 법 문장을 읽어 보세요.</p>${originalBox(c)}<div class="case-box"><strong>우리가 해결하려는 문제</strong><p>${E(c.task)}</p><p class="intro" style="margin:0">‘누가 적용받을까?’, ‘어떤 상황에 해당할까?’, ‘이렇게 바꾸면 다른 사람에게 어떤 영향이 있을까?’를 함께 생각해 보세요.</p></div><label for="idea">① 바꾸고 싶은 점을 편하게 적어 보세요 (선택)</label><textarea id="idea" placeholder="지금 법의 어떤 부분이 부족하다고 느꼈나요? 무엇을 바꾸면 좋을까요?" oninput="updateField('idea',this.value)">${E(g.idea)}</textarea><div class="draft-tools"><button class="soft" onclick="loadOriginalToDraft()">📋 현행 조문을 가져와서 고치기</button></div><p class="tiny">①은 비워 두어도 다음 단계로 진행할 수 있어요. ②에서는 <b>기존 법률 문장을 가져와 꼭 필요한 부분만 고쳐도 괜찮아요.</b></p><label for="amend">② 우리 모둠의 새로운 법률 본문</label><div class="draft-editor"><div class="fixed-article"><strong>${E(articleLabel(c))}</strong></div><textarea id="amend" style="min-height:180px" placeholder="위에 나온 실제 조문을 참고해, 바꾸고 싶은 내용을 법률 문장으로 작성해 보세요." oninput="updateField('amend',this.value)">${E(g.amend)}</textarea></div><p class="tiny">원래 법률 문장의 표현과 문장 구조를 참고하세요. 기존 문구를 그대로 두고 필요한 부분만 수정해도 괜찮아요.</p><label for="reason">③ 왜 이렇게 바꾸려고 하나요?</label><textarea id="reason" style="min-height:105px" placeholder="지금의 문제는 무엇이고, 법을 바꾸면 무엇이 좋아질까요?" oninput="updateField('reason',this.value)">${E(g.reason)}</textarea><label for="effect">④ 이 법은 언제부터 적용할까요? (부칙)</label><select id="effect" onchange="updateField('effect',this.value)">${['공포한 날부터','공포 후 3개월','공포 후 6개월','공포 후 1년','공포 후 2년'].map(x=>`<option ${g.effect===x?'selected':''}>${E(x)}</option>`).join('')}</select><p class="tiny">공포 = 나라에서 새 법을 공식적으로 알리는 것. 준비 시간이 필요하다면 몇 개월 뒤부터 적용할 수 있어요.</p>${stageDoneButton(2)}</div>`;
 }
 function appendix(g){return g.effect==='공포한 날부터'?'이 법은 공포한 날부터 시행한다.':`이 법은 공포 후 ${g.effect.replace('공포 후 ','')}이 경과한 날부터 시행한다.`}
-function artifact(g){const c=getCase(g?.caseId);if(!c)return '법안 없음';return `${c.law} 일부개정법률안\n\n[개정할 위치] ${articleLabel(c)}\n\n[현재 법률 조항 · 원문]\n${c.original}\n\n[우리 모둠이 제안하는 새 조항 본문]\n${articleLabel(c)}\n${g.amend||'(미작성)'}\n\n[바꾸는 이유]\n${g.reason||'(미작성)'}\n\n[부칙 · 시행일]\n${appendix(g)}`}
+function artifact(g){const c=getCase(g?.caseId);if(!c)return '법안 없음';return `${c.law} 일부개정법률안\n\n[개정할 위치] ${articleLabel(c)}\n\n[현재 법률 조항 · 원문]\n${c.original}\n\n[${c.committee}가 제안하는 새 조항 본문]\n${articleLabel(c)}\n${g.amend||'(미작성)'}\n\n[바꾸는 이유]\n${g.reason||'(미작성)'}\n\n[부칙 · 시행일]\n${appendix(g)}`}
 function checkText(original){let arr=[],proposed=original.trim();const add=(title,detail)=>arr.push({title,detail});if(!proposed){add('법률 문장이 비어 있어요','작성 단계의 문장을 먼저 적어 주세요.');return {arr,proposed:''}}if(/할수|해야한다|할수있다/.test(proposed)){proposed=proposed.replace(/할수있다/g,'할 수 있다').replace(/할수/g,'할 수').replace(/해야한다/g,'해야 한다');add('띄어쓰기를 정리했어요','‘할 수 있다’, ‘해야 한다’처럼 띄어 쓰는 것이 자연스러워요.')}if(/해\s*주세요|해줘요/.test(proposed)){proposed=proposed.replace(/해\s*주세요/g,'하도록 한다').replace(/해줘요/g,'하도록 한다');add('대화체 표현을 정리했어요','법률은 부탁하는 말보다 규칙을 정하는 말로 쓰는 것이 좋아요.')}if(!/[.]$/.test(proposed)){proposed=proposed.replace(/[?!。]$/,'');proposed+='.';add('마침표를 정리했어요','법률 문장은 보통 마침표로 끝나요.')}for(const word of ['적당히','가급적','웬만하면','충분히','빠른 시일 내','가능하면','필요한 경우','적절히'])if(original.includes(word))add('뜻이 모호할 수 있는 표현: '+word,'누가, 언제, 어떤 조건에서 적용할지 친구들과 더 정해 보세요. 이 부분은 자동으로 의미를 바꾸지 않았어요.');if(/해야 한다/.test(original)&&/할 수 있다/.test(original))add('선택인지 의무인지 확인해요','‘해야 한다’는 반드시, ‘할 수 있다’는 선택이 가능한 규칙이에요.');if(proposed.length>400)add('긴 문장입니다','하나의 문장에서 여러 규칙을 정하고 있는지 확인해 보세요.');if(arr.length===0)add('기본 표현 점검 완료','자동으로 발견한 문장 오류가 없어요. 원래 법률과 내용이 충돌하지 않는지는 직접 토론해 보세요.');return {arr,proposed}}
 function inspect(){const g=myGroup();if(!g?.amend.trim())return alert('개정할 법률 문장이 없습니다. 교사에게 작성 단계로 돌아가 달라고 요청해 주세요.');const r=checkText(g.amend);g.review=r.arr;g.proposed=r.proposed;g.reviewed=true;g.reviewChoice='';g.reviewMode='';clearMarked(g,[3,4]);save()}
 function acceptRevision(){const g=myGroup();if(!g?.reviewed)return;g.amend=g.proposed;g.reviewChoice='accept';g.reviewMode='';clearMarked(g,[3,4]);save()}
 function chooseManual(){const g=myGroup();if(!g?.reviewed)return;g.reviewMode='edit';g.reviewChoice='';clearMarked(g,[3,4]);save()}
 function saveManual(){const g=myGroup(),txt=el('manualText')?.value.trim();if(!txt)return alert('수정할 법률 본문을 입력해 주세요.');g.amend=txt;const fresh=checkText(txt);g.proposed=fresh.proposed;g.review=fresh.arr;g.reviewed=true;g.reviewChoice='manual';g.reviewMode='';clearMarked(g,[3,4]);save()}
-function legacyReviewScreen(){const g=myGroup(),c=myCase();if(!c)return `<div class="panel">법률안이 아직 없습니다.</div>`;return `<div class="panel"><h2>⚖ 법제사법위원회 · 체계·자구 심사</h2><p class="intro">법사위에서는 <b>조문의 순서와 표현</b>에 문제가 없는지 확인해요. 아래 자동 점검은 API가 없는 규칙 기반 기능이므로 법률적 타당성을 보증하지는 않아요.</p><div class="two"><div>${originalBox(c,false)}</div><div class="case-box"><strong>우리 모둠 수정안</strong><div class="pre">${E(g.amend||'작성한 법률 문장이 없어요.')}</div></div></div><button onclick="inspect()">⚖ 체계·자구 자동 검토하기</button>${g.reviewed?`<div style="margin-top:16px"><div class="spread"><h3>자동 검토 의견</h3><span class="chip done">검토 완료</span></div>${g.review.map(x=>`<div class="review-box"><b>${E(x.title)}</b><p>${E(x.detail)}</p></div>`).join('')}<h3 style="margin-top:18px">검토 내용을 반영한 수정안</h3><div class="pre">${E(g.proposed)}</div><div class="row" style="margin:14px 0"><button ${g.reviewChoice==='accept'?'disabled':''} onclick="acceptRevision()">${g.reviewChoice==='accept'?'✓ 이대로 수정함':'✓ 이대로 수정하기'}</button><button class="outline" onclick="chooseManual()">✏ 직접 수정하기</button></div>${g.reviewMode==='edit'?`<label for="manualText">직접 수정할 법률 문장</label><textarea id="manualText">${E(g.amend)}</textarea><button onclick="saveManual()">수정 내용 저장</button>`:''}${g.reviewChoice?`<div class="notified">${g.reviewChoice==='accept'?'자동 제안문을 법률안에 반영했어요.':'직접 쓴 수정안을 법률안에 반영했어요.'}</div>`:''}</div>`:''}${stageDoneButton(3)}</div>`}
+function legacyReviewScreen(){const g=myGroup(),c=myCase();if(!c)return `<div class="panel">법률안이 아직 없습니다.</div>`;return `<div class="panel"><h2>⚖ 법제사법위원회 · 체계·자구 심사</h2><p class="intro">법사위에서는 <b>조문의 순서와 표현</b>에 문제가 없는지 확인해요. 아래 자동 점검은 API가 없는 규칙 기반 기능이므로 법률적 타당성을 보증하지는 않아요.</p><div class="two"><div>${originalBox(c,false)}</div><div class="case-box"><strong>소관 위원회 개정안</strong><div class="pre">${E(g.amend||'작성한 법률 문장이 없어요.')}</div></div></div><button onclick="inspect()">⚖ 체계·자구 자동 검토하기</button>${g.reviewed?`<div style="margin-top:16px"><div class="spread"><h3>자동 검토 의견</h3><span class="chip done">검토 완료</span></div>${g.review.map(x=>`<div class="review-box"><b>${E(x.title)}</b><p>${E(x.detail)}</p></div>`).join('')}<h3 style="margin-top:18px">검토 내용을 반영한 수정안</h3><div class="pre">${E(g.proposed)}</div><div class="row" style="margin:14px 0"><button ${g.reviewChoice==='accept'?'disabled':''} onclick="acceptRevision()">${g.reviewChoice==='accept'?'✓ 이대로 수정함':'✓ 이대로 수정하기'}</button><button class="outline" onclick="chooseManual()">✏ 직접 수정하기</button></div>${g.reviewMode==='edit'?`<label for="manualText">직접 수정할 법률 문장</label><textarea id="manualText">${E(g.amend)}</textarea><button onclick="saveManual()">수정 내용 저장</button>`:''}${g.reviewChoice?`<div class="notified">${g.reviewChoice==='accept'?'자동 제안문을 법률안에 반영했어요.':'직접 쓴 수정안을 법률안에 반영했어요.'}</div>`:''}</div>`:''}${stageDoneButton(3)}</div>`}
 function submitBill(){
- const g=myGroup();if(!g)return;if(!isLeader())return alert('법률안 최종 제출은 모둠 조장만 할 수 있어요.');if(g.submitted)return;
+ const g=myGroup();if(!g)return;if(!isLeader())return alert(`소관 위원회 법률안의 최종 확정은 ${roleLabel(myNum())}만 할 수 있어요.`);if(g.submitted)return;
  if(!g.amend.trim()||!g.reason.trim())return alert('법률 문장과 바꾸는 이유가 필요합니다.');
  const progress=memberPhaseProgress(myNum(),g,4);
- if(progress.completed.length<progress.members.length&&!confirm(`아직 ${progress.members.length-progress.completed.length}명의 모둠원이 최종안을 확인하지 않았어요. 그래도 조장이 제출할까요?`))return;
- if(!confirm('우리 모둠의 법률안을 본회의에 최종 제출할까요? 제출 후에는 이 파일에서 수정할 수 없어요.'))return;
+ if(progress.completed.length<progress.members.length&&!confirm(`아직 ${progress.members.length-progress.completed.length}명의 위원회 의원이 최종안을 확인하지 않았어요. 그래도 ${roleLabel(myNum())}이 확정할까요?`))return;
+ if(!confirm(`${groupLabel(myNum())}의 법률안을 최종 확정할까요? 확정한 뒤에는 이 수업 화면에서 수정할 수 없어요.`))return;
  g.submitted=true;g.done[4]=true;save();
 }
 function printBill(){const g=myGroup();if(!g)return;const p=window.open('','_blank');if(!p)return alert('팝업을 허용해 주세요.');p.document.write('<!doctype html><html lang="ko"><meta charset="utf-8"><title>모의입법 법안</title><body style="white-space:pre-wrap;font:17px/1.85 Malgun Gothic,sans-serif;margin:40px">'+E(artifact(g))+'</body></html>');p.document.close();p.print()}
 function submitScreen(){
  const g=myGroup();if(!g)return `<div class="panel">법률안이 없습니다.</div>`;
  const progress=memberPhaseProgress(myNum(),g,4);
- return `<div class="panel"><div class="spread"><h2>본회의에 법률안 제출하기</h2><span class="chip ${g.submitted?'done':'wait'}">${g.submitted?'✓ 최종 제출 완료': '제출 전'}</span></div><p class="intro">모둠원은 모두 최종 법률안을 확인하고, <b>조장 의원이 대표로 제출</b>해요. 제출 이후에는 수정할 수 없어요.</p><div class="pre">${E(artifact(g))}</div>${stageDoneButton(4)}<div class="row" style="margin-top:17px"><button onclick="submitBill()" ${g.submitted||!isLeader()?'disabled':''}>${g.submitted?'✓ 제출 완료 · 변경할 수 없음':isLeader()?'우리 모둠 최종 법률안 제출하기':'최종 제출은 조장만 할 수 있어요'}</button><button class="outline" onclick="printBill()">인쇄하기</button><span class="chip">최종안 확인 ${progress.rate}명</span></div><p class="tiny">${g.submitted?'제출이 완료되었습니다. 교사가 이 법안을 본회의에 올릴 수 있어요.':isLeader()?'제출 전 개정 본문과 시행일을 다시 확인해 주세요.':'모둠원은 법률안을 확인하고 조장의 제출을 기다려 주세요.'}</p></div>`;
+ return `<div class="panel"><div class="spread"><h2>${E(groupLabel(myNum()))} · 법률안 최종 확정</h2><span class="chip ${g.submitted?'done':'wait'}">${g.submitted?'✓ 최종 확정 완료': '확정 전'}</span></div><p class="intro">위원회 의원이 개정안을 개별 확인한 뒤 <b>${E(roleLabel(myNum()))}이 소관 위원회의 최종안을 확정</b>해요. 확정 후에는 수정할 수 없어요.</p><div class="pre">${E(artifact(g))}</div>${stageDoneButton(4)}<div class="lesson-legal-tip" style="margin-top:14px"><span>⚖</span><div><b>실제 국회 절차와 구분하기</b><br>이 단계는 모둠이 작성한 법률안의 문안을 확정하는 수업 활동입니다. 실제 국회의 법률안 발의·제출, 위원회 심사, 본회의 의결과는 별개의 절차입니다.</div></div><div class="row" style="margin-top:17px"><button onclick="submitBill()" ${g.submitted||!isLeader()?'disabled':''}>${g.submitted?'✓ 확정 완료 · 변경할 수 없음':isLeader()?'우리 위원회 법률안 확정하기':`최종 확정은 ${E(roleLabel(myNum()))}만 할 수 있어요`}</button><button class="outline" onclick="printBill()">인쇄하기</button><span class="chip">최종안 확인 ${progress.rate}명</span></div><p class="tiny">${g.submitted?'위원회 법률안이 확정되었습니다. 교사가 이 법안을 본회의 안건으로 선정할 수 있어요.':isLeader()?'확정 전에 개정 본문과 시행일을 다시 확인해 주세요.':`위원회 의원은 법률안을 확인하고 ${E(roleLabel(myNum()))}의 최종 확정을 기다려 주세요.`}</p></div>`;
 }
 function motionGroup(){return state.groups[state.activeMotion]||null}
 function voterBucket(id=state.activeMotion){return state.votes[id]||{}}
@@ -658,7 +730,7 @@ function decision(id=state.activeMotion){const z=tally(id),enrolled=Math.max(1,N
 function currentVote(){const v=voterBucket()[sid];return typeof v==='string'?v:v?.choice||''}
 function plenaryBill(){
  const g=motionGroup(),c=getCase(g?.caseId);if(!g||!c)return '';
- return `<div class="bill-front"><div class="spread"><span class="chip">${E(state.activeMotion)}모둠 · ${E(c.committee)}</span><strong>${E(articleLabel(c))}</strong></div><h2>${E(c.law)} 일부개정법률안</h2><div class="bill-compare"><div class="compare-old"><b>📜 현재 법률의 원래 조항</b><div class="pre">${E(c.original)}</div></div><div class="compare-new"><b>✏️ 모둠이 제안한 새로운 조항</b><div class="article-head">${E(articleLabel(c))}</div><div class="pre">${E(g.amend)}</div></div></div><div class="case-box" style="margin-bottom:0"><b>바꾸려는 이유</b><p>${E(g.reason)}</p><div class="tiny">시행일: ${E(appendix(g))}</div></div></div>`;
+ return `<div class="bill-front"><div class="spread"><span class="chip">${E(groupLabel(state.activeMotion,true))}</span><strong>${E(articleLabel(c))}</strong></div><h2>${E(c.law)} 일부개정법률안</h2><div class="bill-compare"><div class="compare-old"><b>📜 현재 법률의 원래 조항</b><div class="pre">${E(c.original)}</div></div><div class="compare-new"><b>✏️ 소관 위원회가 제안한 새로운 조항</b><div class="article-head">${E(articleLabel(c))}</div><div class="pre">${E(g.amend)}</div></div></div><div class="case-box" style="margin-bottom:0"><b>바꾸려는 이유</b><p>${E(g.reason)}</p><div class="tiny">시행일: ${E(appendix(g))}</div></div></div>`;
 }
 // 학생 표결 결과: 교사 전광판과 동일한 전체 의원별 투표 기록을 표시합니다.
 // 서버 데이터(state.votes / state.reconsiderations)는 읽기만 하며 별도 저장은 발생하지 않습니다.
@@ -671,13 +743,13 @@ function studentVoteResultsBoard(kind,id){
    const vote=ballot[uid];
    const choice=typeof vote==='string'?vote:(vote?.choice||'');
    const cls=choice==='찬성'?'yes':choice==='반대'?'no':choice==='기권'?'abs':'none';
-   return `<div class="seat ${cls}" title="${E(member.group)}모둠 ${E(member.name)}: ${E(choice||'미투표')}"><span>${E(member.name)}</span><small>${E(choice||member.group+'모둠 · 대기')}</small></div>`;
+   return `<div class="seat ${cls}" title="${E(groupLabel(member.group,true))} ${E(member.name)}: ${E(choice||'미투표')}"><span>${E(member.name)}</span><small>${E(choice||'대기')}</small></div>`;
  });
  const seats=entries.length?entries.join(''):'<div class="seat none"><span>참여 학생 없음</span></div>';
  const help=second?'재의결 요건: 재적의원 과반수 출석 + 출석의원 3분의 2 이상 찬성.':'본 모의수업에서는 투표를 제출한 인원을 출석 인원으로 계산합니다. 일반 의결: 재적 과반수 출석 + 출석 과반수 찬성.';
- return `<section class="board student-vote-results" aria-label="${second?'재의결':'본회의'} 전체 학생 표결 현황"><div class="student-vote-results-title">${second?'🏛 재의결':'🏛 본회의'} · 전체 의원 표결 현황</div><div class="student-vote-results-subtitle">${E(id)}모둠 안건 · 표결에 참여하지 않은 의원도 함께 표시됩니다.</div><div class="seatgrid">${seats}</div><div class="board-legend"><span><i class="dot yes"></i>찬성</span><span><i class="dot no"></i>반대</span><span><i class="dot abs"></i>기권</span><span><i class="dot"></i>미투표</span></div><div class="tiny student-vote-results-note">${E(help)}</div></section>`;
+ return `<section class="board student-vote-results" aria-label="${second?'재의결':'본회의'} 전체 학생 표결 현황"><div class="student-vote-results-title">${second?'🏛 재의결':'🏛 본회의'} · 전체 의원 표결 현황</div><div class="student-vote-results-subtitle">${E(groupLabel(id,true))} 안건 · 표결에 참여하지 않은 의원도 함께 표시됩니다.</div><div class="seatgrid">${seats}</div><div class="board-legend"><span><i class="dot yes"></i>찬성</span><span><i class="dot no"></i>반대</span><span><i class="dot abs"></i>기권</span><span><i class="dot"></i>미투표</span></div><div class="tiny student-vote-results-note">${E(help)}</div></section>`;
 }
-function legacyStudentPlenary(){const m=me(),g=motionGroup(),c=getCase(g?.caseId),v=currentVote();if(!g||!c)return `<div class="panel"><div class="ballot-stage"><div class="ballot-title">본회의 시작을 기다리고 있어요.</div><p>교사가 발표할 모둠의 법안을 선택하면 이 화면에 나타납니다.</p></div></div>`;let inner='';if(state.voteEnded){inner=`<div class="receipt"><span class="chip done">표결 종료 · 의결 결과</span><h2>${E(decision())}</h2><p>참여 ${tally().total}명 · 찬성 ${tally().yes}명 · 반대 ${tally().no}명 · 기권 ${tally().abs}명</p><div class="tiny">${v?`${E(m.name)} 의원님의 선택: ${E(v)}`:'이 의원님은 표결에 참여하지 않았어요.'}</div></div>`}else if(!state.voteOpen){inner=`<div class="ballot-title">🎙 ${E(state.activeMotion)}모둠 제안 설명 중</div><p class="ballot-question">발표를 듣고 법률안의 장점과 걱정되는 점을 생각해 보세요.<br>교사가 표결을 시작하면 찬성·반대·기권 버튼이 나타납니다.</p><span class="chip wait">표결 시작 전</span>`}else if(v){const cls=v==='찬성'?'yes':v==='반대'?'no':'abs';inner=`<div class="receipt"><span class="chip done">✓ 투표가 기록되었어요</span><h2>${E(m.name)} 의원님의 선택</h2><div class="receipt-choice ${cls}">이 법률안에 <b>[${E(v)}]</b></div><p>선택한 내용이 모의국회 표결 현황에 반영되었습니다.<br>표결이 끝나기 전에는 선택을 취소하고 다시 투표할 수 있어요.</p><button class="outline" onclick="cancelVote()">↶ 선택 취소하고 다시 투표하기</button></div>`}else{inner=`<span class="chip dark">전자표결 진행 중</span><div class="ballot-title">${E(m.name)} 의원님, 이 법률안에<br>어떻게 투표하시겠습니까?</div><div class="vote-circles"><button class="vote-circle yes" onclick="cast('찬성')">찬성<small>법안에 동의</small></button><button class="vote-circle no" onclick="cast('반대')">반대<small>법안에 동의하지 않음</small></button><button class="vote-circle abs" onclick="cast('기권')">기권<small>선택을 보류</small></button></div><p class="tiny">한 가지를 선택하면 바로 표결에 기록되고, 확인 화면이 나타납니다.</p>`}return `<div class="panel"><div class="spread"><h2>🏛 국회 본회의 · 현재 안건</h2><span class="chip">${state.voteOpen?'표결 중':state.voteEnded?'결과 발표':'제안 설명 중'}</span></div>${plenaryBill()}<div class="ballot-stage" style="margin-top:16px">${inner}</div>${state.voteEnded?studentVoteResultsBoard('original',state.activeMotion):''}</div>`}
+function legacyStudentPlenary(){const m=me(),g=motionGroup(),c=getCase(g?.caseId),v=currentVote();if(!g||!c)return `<div class="panel"><div class="ballot-stage"><div class="ballot-title">본회의 시작을 기다리고 있어요.</div><p>교사가 발표할 위원회의 법률안을 선택하면 이 화면에 나타납니다.</p></div></div>`;let inner='';if(state.voteEnded){inner=`<div class="receipt"><span class="chip done">표결 종료 · 의결 결과</span><h2>${E(decision())}</h2><p>참여 ${tally().total}명 · 찬성 ${tally().yes}명 · 반대 ${tally().no}명 · 기권 ${tally().abs}명</p><div class="tiny">${v?`${E(m.name)} 의원님의 선택: ${E(v)}`:'이 의원님은 표결에 참여하지 않았어요.'}</div></div>`}else if(!state.voteOpen){inner=`<div class="ballot-title">🎙 ${E(groupLabel(state.activeMotion,true))} 제안 설명 중</div><p class="ballot-question">발표를 듣고 법률안의 장점과 걱정되는 점을 생각해 보세요.<br>교사가 표결을 시작하면 찬성·반대·기권 버튼이 나타납니다.</p><span class="chip wait">표결 시작 전</span>`}else if(v){const cls=v==='찬성'?'yes':v==='반대'?'no':'abs';inner=`<div class="receipt"><span class="chip done">✓ 투표가 기록되었어요</span><h2>${E(m.name)} 의원님의 선택</h2><div class="receipt-choice ${cls}">이 법률안에 <b>[${E(v)}]</b></div><p>선택한 내용이 모의국회 표결 현황에 반영되었습니다.<br>표결이 끝나기 전에는 선택을 취소하고 다시 투표할 수 있어요.</p><button class="outline" onclick="cancelVote()">↶ 선택 취소하고 다시 투표하기</button></div>`}else{inner=`<span class="chip dark">전자표결 진행 중</span><div class="ballot-title">${E(m.name)} 의원님, 이 법률안에<br>어떻게 투표하시겠습니까?</div><div class="vote-circles"><button class="vote-circle yes" onclick="cast('찬성')">찬성<small>법안에 동의</small></button><button class="vote-circle no" onclick="cast('반대')">반대<small>법안에 동의하지 않음</small></button><button class="vote-circle abs" onclick="cast('기권')">기권<small>선택을 보류</small></button></div><p class="tiny">한 가지를 선택하면 바로 표결에 기록되고, 확인 화면이 나타납니다.</p>`}return `<div class="panel"><div class="spread"><h2>🏛 국회 본회의 · 현재 안건</h2><span class="chip">${state.voteOpen?'표결 중':state.voteEnded?'결과 발표':'제안 설명 중'}</span></div>${plenaryBill()}<div class="ballot-stage" style="margin-top:16px">${inner}</div>${state.voteEnded?studentVoteResultsBoard('original',state.activeMotion):''}</div>`}
 // 가결과 공포는 구분합니다. 실제 공포 절차는 정부 이송과 공포 등의 과정을 거칩니다.
 function isPassed(id){return !!state.closedMotions[id]&&decision(id).startsWith('가결')}
 function passedGroups(){return allGroups().filter(([id,g])=>g.submitted&&isPassed(id))}
@@ -686,11 +758,11 @@ function koDateNow(){const date=new Date();return new Intl.DateTimeFormat('ko-KR
 function selectGazette(id){state.gazetteSelected=id;save()}
 function promulgateLaw(id){
  if(state.phase!==6)return alert('법률 공포 단계에서만 진행할 수 있어요.');
- if(!state.groups[id]?.submitted)return alert('제출된 법률안이 없습니다.');
+ if(!state.groups[id]?.submitted)return alert('확정된 위원회 법률안이 없습니다.');
  if(!canPromulgate(id))return alert('최초 본회의에서 가결되고, 재의요구를 한 경우에는 재의결까지 성공한 법률안만 공포할 수 있습니다.');
  if(state.promulgations[id])return alert('이미 공포한 법률입니다. 다시 공포할 수 없어요.');
  const c=getCase(state.groups[id].caseId);
- if(!confirm(`${id}모둠의 「${c?.law||'법률'} 일부개정법률」을 대통령 명의로 모의 공포할까요?\n실제 국가의 법률을 공포하는 것은 아니며 수업용 관보를 발행합니다.`))return;
+ if(!confirm(`${groupLabel(id,true)}의 「${c?.law||'법률'} 일부개정법률」을 대통령 명의로 모의 공포할까요?\n실제 국가의 법률을 공포하는 것은 아니며 수업용 관보를 발행합니다.`))return;
  const order=Object.keys(state.promulgations).length+1;
  state.promulgations[id]={order,date:koDateNow(),issuedAt:Date.now(),afterReconsideration:!!state.reconsiderations?.[id]};
  state.gazetteSelected=id;
@@ -703,7 +775,7 @@ function gazettePaper(id){
  return `<article class="gazette-paper" aria-label="${E(title)} 모의 관보">
   <div class="gazette-watermark" aria-hidden="true">모의 입법 수업</div>
   <div class="gazette-masthead"><span class="gazette-seal">大韓民國<br>모의 관보</span><div><small>법률 공포 체험 · 교육용 가상 문서</small><h2>대한민국 관보</h2><div class="gazette-subtitle">大 韓 民 國 官 報 · 모의국회 특별호</div></div></div>
-  <div class="gazette-meta"><span>모의관보 제${String(pub.order).padStart(2,'0')}호</span><span>공포일: ${E(pub.date)}</span><span>${E(id)}모둠 제출</span></div>
+  <div class="gazette-meta"><span>모의관보 제${String(pub.order).padStart(2,'0')}호</span><span>공포일: ${E(pub.date)}</span><span>${E(groupLabel(id,true))} 최종안</span></div>
   <div class="gazette-type">법률 · 모의 공포</div>
   <h3>${E(title)}</h3>
   <p class="gazette-declare">${pub.afterReconsideration?'대통령의 재의요구 후 국회에서 재의결하여 확정된 다음의 법률을 이에 공포한다.':'국회에서 의결된 다음의 법률을 이에 공포한다.'}</p>
@@ -721,18 +793,18 @@ function legacyStudentGazette(){
  return `<div class="panel"><div class="spread"><h2>📜 대통령의 법률 공포 · 모의 관보</h2><span class="chip">수업의 마지막 단계</span></div>${gazetteInfo()}
  ${published.length?`<div class="gazette-list-head">🎉 <b>대통령 명의로 공포된 우리 반 법률 ${published.length}건</b><span>교사가 공포하면 관보가 발행돼요.</span></div>${[...published].reverse().map(([id])=>gazettePaper(id)).join('')}`:
  `<div class="gazette-wait"><div style="font-size:48px">📜</div><h3>${passed.length?'대통령 공포를 기다리고 있어요':'아직 공포할 법률이 없어요'}</h3><p>${passed.length?'본회의에서 통과된 법률안을 교사가 대통령 명의로 공포하면 여기에 관보가 나타납니다.':'본회의에서 통과된 법률안이 있는지 선생님과 확인해 보세요. 통과하지 못한 법안은 공포되지 않아요.'}</p></div>`}
- ${pending.length?`<div class="gazette-pending"><b>공포를 기다리는 법률안</b><div>${pending.map(([id,g])=>`${E(id)}모둠 · ${E(getCase(g.caseId)?.law)} 일부개정법률안`).join('<br>')}</div></div>`:''}
+ ${pending.length?`<div class="gazette-pending"><b>공포를 기다리는 법률안</b><div>${pending.map(([id,g])=>`${E(groupLabel(id,true))} · ${E(getCase(g.caseId)?.law)} 일부개정법률안`).join('<br>')}</div></div>`:''}
  </div>`;
 }
 function legacyTeacherGazette(){
  const bills=allGroups().filter(([,g])=>g.submitted),passed=passedGroups(),published=publishedGroups();
  const choose=(state.gazetteSelected&&state.groups[state.gazetteSelected])?state.gazetteSelected:(bills[0]?.[0]||'');
  const chosen=state.groups[choose],c=getCase(chosen?.caseId),publishedCurrent=!!state.promulgations[choose],pass=choose&&isPassed(choose);
- const tiles=bills.map(([id,g])=>{const cl=state.closedMotions[id],ok=isPassed(id),pub=!!state.promulgations[id],z=tally(id),lab=!cl?'표결 전':ok?(pub?'✓ 대통령 공포 완료':'✓ 국회 통과 · 공포 준비'):'✕ 본회의 미통과';return `<div class="gazette-case ${ok?'gazette-yes':'gazette-no'}"><div><b>${E(id)}모둠 · ${E(getCase(g.caseId)?.law||'법률안')}</b><span>${E(lab)}</span></div><small>찬성 ${z.yes}명 · 반대 ${z.no}명 · 기권 ${z.abs}명</small></div>`}).join('');
+ const tiles=bills.map(([id,g])=>{const cl=state.closedMotions[id],ok=isPassed(id),pub=!!state.promulgations[id],z=tally(id),lab=!cl?'표결 전':ok?(pub?'✓ 대통령 공포 완료':'✓ 국회 통과 · 공포 준비'):'✕ 본회의 미통과';return `<div class="gazette-case ${ok?'gazette-yes':'gazette-no'}"><div><b>${E(groupLabel(id,true))} · ${E(getCase(g.caseId)?.law||'법률안')}</b><span>${E(lab)}</span></div><small>찬성 ${z.yes}명 · 반대 ${z.no}명 · 기권 ${z.abs}명</small></div>`}).join('');
  return `<div class="panel"><div class="spread"><h2>📜 대통령의 법률 공포 · 관보 발행</h2><span class="chip">교사 진행</span></div>${gazetteInfo()}<div class="teacher-metrics gazette-metrics"><div class="stat"><small>표결 마친 법안</small><b>${bills.filter(([id])=>state.closedMotions[id]).length}</b></div><div class="stat"><small>국회 통과</small><b>${passed.length}</b></div><div class="stat"><small>공포 완료</small><b>${published.length}</b></div><div class="stat"><small>공포 대기</small><b>${passed.length-published.length}</b></div></div>
- <div class="gazette-publish-controls"><label for="gazetteChoice">대통령이 공포할 법률안</label><div class="gazette-publish-row"><select id="gazetteChoice" onchange="selectGazette(this.value)"><option value="">— 법률안 선택 —</option>${bills.map(([id,g])=>`<option value="${E(id)}" ${choose===id?'selected':''}>${E(id)}모둠 · ${E(getCase(g.caseId)?.law||'법률안')} · ${E(state.closedMotions[id]?(isPassed(id)?'가결':'부결'):'표결 전')}</option>`).join('')}</select><button class="gazette-publish-btn" onclick="promulgateLaw('${E(choose)}')" ${!pass||publishedCurrent?'disabled':''}>${publishedCurrent?'✓ 대통령 공포 완료':pass?'✒ 대통령 명의로 모의 공포하기':'공포할 수 없는 법안'}</button></div><div class="tiny">${!choose?'공포할 법률안을 선택하세요.':!state.closedMotions[choose]?'먼저 본회의에서 표결을 마쳐야 해요.':!pass?'국회에서 통과하지 못한 법률안은 공포할 수 없어요.':publishedCurrent?'공포가 완료되었습니다. 아래의 관보가 학생 화면에도 표시됩니다.':'가결된 법안입니다. 공포 버튼을 누르면 수업용 관보가 발행됩니다.'}</div></div>
- <div class="gazette-case-grid">${tiles||'<div class="tiny">제출된 법안이 없습니다.</div>'}</div>
- ${publishedCurrent?gazettePaper(choose):pass?`<div class="gazette-wait"><div style="font-size:46px">📜</div><h3>${E(c?.law)} 일부개정법률 · 공포 대기</h3><p>위의 ‘대통령 명의로 모의 공포하기’ 버튼을 누르면 공포문이 완성되고 관보가 발행됩니다.</p></div>`:`<div class="gazette-wait"><h3>${choose?(state.closedMotions[choose]?'이 법안은 본회의에서 통과되지 않았습니다.':'이 법안은 아직 표결을 마치지 않았습니다.'):'법률안 제출과 표결을 먼저 진행해 주세요.'}</h3><p>국회에서 통과된 법률만 모의 관보에 실을 수 있어요.</p></div>`}
+ <div class="gazette-publish-controls"><label for="gazetteChoice">대통령이 공포할 법률안</label><div class="gazette-publish-row"><select id="gazetteChoice" onchange="selectGazette(this.value)"><option value="">— 법률안 선택 —</option>${bills.map(([id,g])=>`<option value="${E(id)}" ${choose===id?'selected':''}>${E(groupLabel(id,true))} · ${E(getCase(g.caseId)?.law||'법률안')} · ${E(state.closedMotions[id]?(isPassed(id)?'가결':'부결'):'표결 전')}</option>`).join('')}</select><button class="gazette-publish-btn" onclick="promulgateLaw('${E(choose)}')" ${!pass||publishedCurrent?'disabled':''}>${publishedCurrent?'✓ 대통령 공포 완료':pass?'✒ 대통령 명의로 모의 공포하기':'공포할 수 없는 법안'}</button></div><div class="tiny">${!choose?'공포할 법률안을 선택하세요.':!state.closedMotions[choose]?'먼저 본회의에서 표결을 마쳐야 해요.':!pass?'국회에서 통과하지 못한 법률안은 공포할 수 없어요.':publishedCurrent?'공포가 완료되었습니다. 아래의 관보가 학생 화면에도 표시됩니다.':'가결된 법안입니다. 공포 버튼을 누르면 수업용 관보가 발행됩니다.'}</div></div>
+ <div class="gazette-case-grid">${tiles||'<div class="tiny">확정된 위원회 법률안이 없습니다.</div>'}</div>
+ ${publishedCurrent?gazettePaper(choose):pass?`<div class="gazette-wait"><div style="font-size:46px">📜</div><h3>${E(c?.law)} 일부개정법률 · 공포 대기</h3><p>위의 ‘대통령 명의로 모의 공포하기’ 버튼을 누르면 공포문이 완성되고 관보가 발행됩니다.</p></div>`:`<div class="gazette-wait"><h3>${choose?(state.closedMotions[choose]?'이 법안은 본회의에서 통과되지 않았습니다.':'이 법안은 아직 표결을 마치지 않았습니다.'):'모둠 법률안 확정과 본회의 표결을 먼저 진행해 주세요.'}</h3><p>국회에서 통과된 법률만 모의 관보에 실을 수 있어요.</p></div>`}
  </div>`;
 }
 function renderStudent(){const p=el('student');if(!me()){p.innerHTML=entry();return}p.innerHTML=memberHeader()+rails()+[committeeScreen,readingScreen,writingScreen,reviewScreen,submitScreen,studentPlenary,studentGazette][state.phase]()+`<div class="tiny" style="padding:4px 8px">교사 창에서 현재 단계를 변경하면 학생 화면도 그 단계에 맞게 바뀝니다. 서버 연결 전에는 동일 브라우저의 여러 탭에서만 데이터 변경을 공유해요.</div>`}
@@ -741,41 +813,41 @@ function teacherStep(change){
  if(from===6&&change<0&&activeReconsiderationVoting())return alert('현재 진행 중인 재표결을 종료한 뒤 단계 이동을 진행해 주세요.');
  if(change>0&&from<=4){
   const records=allGroups(),unfinished=records.filter(([n,g])=>!groupPhaseComplete(n,g,from));
-  if(unfinished.length&&!confirm(`아직 ${unfinished.map(([n])=>n+'모둠').join(', ')}이(가) 현재 단계를 완료하지 않았습니다. 그래도 다음 단계로 이동할까요?`))return;
+  if(unfinished.length&&!confirm(`아직 ${unfinished.map(([n])=>groupLabel(n,true)).join(', ')}이(가) 현재 단계를 완료하지 않았습니다. 그래도 다음 단계로 이동할까요?`))return;
   if(from===0&&records.length===0&&!confirm('아직 입장한 모둠이 없습니다. 그래도 넘어갈까요?'))return;
  }
- if(from===5&&to===6){if(state.voteOpen){if(!confirm('진행 중인 표결을 끝내고 공포 단계로 넘어갈까요?'))return;endVote(false)}const remaining=allGroups().filter(([,g])=>g.submitted).filter(([id])=>!state.closedMotions[id]);if(remaining.length&&!confirm(`${remaining.map(([id])=>id+'모둠').join(', ')}의 표결이 아직 끝나지 않았어요. 공포 단계로 이동할까요?`))return}
+ if(from===5&&to===6){if(state.voteOpen){if(!confirm('진행 중인 표결을 끝내고 공포 단계로 넘어갈까요?'))return;endVote(false)}const remaining=allGroups().filter(([,g])=>g.submitted).filter(([id])=>!state.closedMotions[id]);if(remaining.length&&!confirm(`${remaining.map(([id])=>groupLabel(id,true)).join(', ')}의 표결이 아직 끝나지 않았어요. 공포 단계로 이동할까요?`))return}
  state.phase=to;state.phaseRevision=(state.phaseRevision||0)+1;save();
 }
 function teacherSetEnrolled(v){state.enrolled=Math.max(1,Math.min(300,Number(v)||1));save(false);render()}
-function teacherSetMotion(group){if(state.voteOpen)return alert('표결을 종료한 뒤 다른 안건을 선택해 주세요.');if(group&&!state.groups[group]?.submitted)return alert('제출되지 않은 법안은 상정할 수 없어요.');state.activeMotion=group;state.voteOpen=false;state.voteEnded=!!state.closedMotions[group];save()}
-function startVote(){if(state.phase!==5)return alert('본회의 단계에서 시작할 수 있습니다.');if(state.reconsiderations?.[state.activeMotion]||state.promulgations?.[state.activeMotion])return alert('대통령 재의요구 또는 공포 절차를 시작한 법안의 최초 표결 결과는 변경할 수 없습니다.');if(!motionGroup()?.submitted)return alert('먼저 최종 제출된 법률안을 선택해 주세요.');if(state.voteEnded){if(!confirm('이 안건의 표결을 다시 시작하겠습니까? 기존 표결 기록은 초기화됩니다.'))return;state.votes[state.activeMotion]={}}state.voteOpen=true;state.voteEnded=false;state.closedMotions[state.activeMotion]=false;save()}
+function teacherSetMotion(group){if(state.voteOpen)return alert('표결을 종료한 뒤 다른 안건을 선택해 주세요.');if(group&&!state.groups[group]?.submitted)return alert('최종 확정 전인 모둠 법률안은 상정할 수 없어요.');state.activeMotion=group;state.voteOpen=false;state.voteEnded=!!state.closedMotions[group];save()}
+function startVote(){if(state.phase!==5)return alert('본회의 단계에서 시작할 수 있습니다.');if(state.reconsiderations?.[state.activeMotion]||state.promulgations?.[state.activeMotion])return alert('대통령 재의요구 또는 공포 절차를 시작한 법안의 최초 표결 결과는 변경할 수 없습니다.');if(!motionGroup()?.submitted)return alert('먼저 최종 확정된 모둠 법률안을 선택해 주세요.');if(state.voteEnded){if(!confirm('이 안건의 표결을 다시 시작하겠습니까? 기존 표결 기록은 초기화됩니다.'))return;state.votes[state.activeMotion]={}}state.voteOpen=true;state.voteEnded=false;state.closedMotions[state.activeMotion]=false;save()}
 function endVote(refresh=true){if(!state.activeMotion)return;if(!state.voteOpen)return;state.voteOpen=false;state.voteEnded=true;state.closedMotions[state.activeMotion]=true;if(refresh)save()}
 function teacherHeader(){return `<div class="teacher-head"><div><small>교사 수업 진행 · ${state.phase+1} / 7단계</small><h1>${E(PHASES[state.phase])}</h1><p>${E(PHASE_NOTES[state.phase])}</p></div><div class="teacher-controls"><button class="outline" onclick="teacherStep(-1)" ${state.phase===0?'disabled':''}>← 이전 단계</button><button onclick="teacherStep(1)" ${state.phase===6?'disabled':''}>다음 단계 →</button></div></div>${rails()}`}
 function groupProgress(no,g){return groupPhaseComplete(no,g,state.phase)}
-function stageDataText(g){const c=getCase(g.caseId);switch(state.phase){case 0:return c?'선택 위원회: '+c.committee:'위원회 선택 대기';case 1:return c?`탐구 법률: ${c.law} ${c.article}`:'위원회 선택 전';case 2:return g.amend?`작성 본문: ${g.amend.slice(0,86)}${g.amend.length>86?'…':''}`:'법률 본문 작성 중';case 3:return g.reviewed?`자동 검토 ${g.review.length}건 · ${g.reviewChoice?'수정 방향 선택 완료':'검토 의견 확인 중'}`:'자동 검토 대기';default:return g.submitted?'최종 법률안 제출됨':'최종 법률안 제출 대기'}}
+function stageDataText(g){const c=getCase(g.caseId);switch(state.phase){case 0:return c?'선택 위원회: '+c.committee:'위원회 선택 대기';case 1:return c?`탐구 법률: ${c.law} ${c.article}`:'위원회 선택 전';case 2:return g.amend?`작성 본문: ${g.amend.slice(0,86)}${g.amend.length>86?'…':''}`:'법률 본문 작성 중';case 3:return g.reviewed?`자동 검토 ${g.review.length}건 · ${g.reviewChoice?'수정 방향 선택 완료':'검토 의견 확인 중'}`:'자동 검토 대기';default:return g.submitted?'모둠 법률안 확정됨':'모둠 법률안 확정 대기'}}
 function teacherSetLeader(no,id){
  const g=state.groups[String(no)];if(!g)return;
  if(id&&(!state.members[id]||state.members[id].group!==String(no)))return alert('해당 모둠의 의원을 선택해 주세요.');
  if(g.leaderId===id)return;
- const name=id?state.members[id].name:'없음';if(!confirm(`${no}모둠의 조장을 ${name} 의원으로 지정할까요?`))return;
+ const name=id?state.members[id].name:'없음';if(!confirm(`${groupLabel(no,true)}의 ${roleLabel(no)}을 ${name} 의원으로 지정할까요?`))return;
  g.leaderId=id;save();
 }
 function memberStatusHtml(no,g){
  const m=membersOf(no),p=state.phase,leader=getLeader(no),progress=memberPhaseProgress(no,g,p),individual=[1,2,3,4].includes(p);
- return `<div class="group-members"><div class="spread"><strong class="member-subhead">모둠원별 활동 현황</strong><span class="chip ${individual&&progress.completed.length===m.length&&m.length?'done':'wait'}">${individual?progress.rate+'명 '+(p===4?'최종안 확인':'완료'):m.length+'명 입장'}</span></div><div class="member-pills">${m.length?m.map(x=>`<span class="member-pill ${individual?(marked(g,p,x.id)?'done':'pending'):''}">${leader?.id===x.id?'★ ':''}${E(x.name)}${individual?(marked(g,p,x.id)?(p===4?' · 확인함':' · 완료'):' · 진행 중'):''}</span>`).join(''):'<span class="tiny">아직 접속한 모둠원이 없습니다.</span>'}</div>${!leader?'<p class="tiny" style="color:#b15b45">조장이 아직 정해지지 않았어요.</p>':''}<details class="leader-manage"><summary>조장 지정·변경 (교사용)</summary><select aria-label="${E(no)}모둠 조장 지정" onchange="teacherSetLeader('${E(no)}',this.value)"><option value="">— 조장 없음 —</option>${m.map(x=>`<option value="${E(x.id)}" ${leader?.id===x.id?'selected':''}>${E(x.name)} 의원</option>`).join('')}</select></details></div>`;
+ return `<div class="group-members"><div class="spread"><strong class="member-subhead">${confirmedCommitteeOf(no)?'위원회 의원별':'모둠원별'} 활동 현황</strong><span class="chip ${individual&&progress.completed.length===m.length&&m.length?'done':'wait'}">${individual?progress.rate+'명 '+(p===4?'최종안 확인':'완료'):m.length+'명 입장'}</span></div><div class="member-pills">${m.length?m.map(x=>`<span class="member-pill ${individual?(marked(g,p,x.id)?'done':'pending'):''}">${leader?.id===x.id?`★ ${E(roleLabel(no))} `:''}${E(x.name)}${individual?(marked(g,p,x.id)?(p===4?' · 확인함':' · 완료'):' · 진행 중'):''}</span>`).join(''):'<span class="tiny">아직 접속한 모둠원이 없습니다.</span>'}</div>${!leader?`<p class="tiny" style="color:#b15b45">${E(roleLabel(no))}이 아직 정해지지 않았어요.</p>`:''}<details class="leader-manage"><summary>${E(roleLabel(no))} 지정·변경 (교사용)</summary><select aria-label="${E(groupLabel(no,true))} ${E(roleLabel(no))} 지정" onchange="teacherSetLeader('${E(no)}',this.value)"><option value="">— ${E(roleLabel(no))} 없음 —</option>${m.map(x=>`<option value="${E(x.id)}" ${leader?.id===x.id?'selected':''}>${E(x.name)} 의원</option>`).join('')}</select></details></div>`;
 }
 function legacyTeacherWork(){
  const rows=allGroups(),done=rows.filter(([n,g])=>groupPhaseComplete(n,g,state.phase)).length;
- return `<div class="panel"><div class="spread"><h2>지금 학생들이 하는 활동</h2><span class="chip">${E(PHASES[state.phase])}</span></div><div class="teacher-metrics"><div class="stat"><small>참여 학생</small><b>${Object.keys(state.members||{}).length}</b></div><div class="stat"><small>참여 모둠</small><b>${rows.length}</b></div><div class="stat"><small>현재 단계 완료 모둠</small><b>${done}</b></div><div class="stat"><small>완료 전 모둠</small><b>${rows.length-done}</b></div></div><div class="groupgrid">${rows.length?rows.map(([n,g])=>{const c=getCase(g.caseId),complete=groupPhaseComplete(n,g,state.phase),leader=getLeader(n);return `<div class="groupcard"><div class="spread"><b>${E(n)}모둠</b><span class="chip ${complete?'done':'wait'}">${complete?'✓ 완료':'진행 중'}</span></div><p>${E(c?.committee||'상임위 선택 전')}<br><strong>조장:</strong> ${E(leader?.name||'미지정')} 의원<br>${E(stageDataText(g))}</p>${memberStatusHtml(n,g)}${state.phase>=2?`<details style="margin-top:10px"><summary>법안 자세히 보기</summary><div class="pre">${E(artifact(g))}</div></details>`:''}</div>`}).join(''):'<div class="small-warn">아직 입장한 모둠이 없어요. 학생들이 입장하면 모둠과 의원별 활동 현황이 나타나요.</div>'}</div></div>`;
+ return `<div class="panel"><div class="spread"><h2>지금 학생들이 하는 활동</h2><span class="chip">${E(PHASES[state.phase])}</span></div><div class="teacher-metrics"><div class="stat"><small>참여 학생</small><b>${Object.keys(state.members||{}).length}</b></div><div class="stat"><small>참여 모둠</small><b>${rows.length}</b></div><div class="stat"><small>현재 단계 완료 모둠</small><b>${done}</b></div><div class="stat"><small>완료 전 모둠</small><b>${rows.length-done}</b></div></div><div class="groupgrid">${rows.length?rows.map(([n,g])=>{const c=getCase(g.caseId),complete=groupPhaseComplete(n,g,state.phase),leader=getLeader(n);return `<div class="groupcard"><div class="spread"><b>${E(groupLabel(n,true))}</b><span class="chip ${complete?'done':'wait'}">${complete?'✓ 완료':'진행 중'}</span></div><p><strong>담당 법률:</strong> ${E(c?.law||'상임위원회 배정 전')}<br><strong>${E(roleLabel(n))}:</strong> ${E(leader?.name||'미지정')} 의원<br>${E(stageDataText(g))}</p>${memberStatusHtml(n,g)}${state.phase>=2?`<details style="margin-top:10px"><summary>법안 자세히 보기</summary><div class="pre">${E(artifact(g))}</div></details>`:''}</div>`}).join(''):'<div class="small-warn">아직 입장한 모둠이 없어요. 학생들이 입장하면 모둠과 의원별 활동 현황이 나타나요.</div>'}</div></div>`;
 }
 function legacyBoardHtml(){
  const g=motionGroup(),c=getCase(g?.caseId),z=tally(),vlist=Object.entries(state.members).sort((a,b)=>Number(a[1].group)-Number(b[1].group)||a[1].name.localeCompare(b[1].name,'ko'));
  const mid=state.activeMotion,closed=!!state.closedMotions[mid],status=state.voteOpen?'● 표결 진행 중':closed?'■ 표결 종료 · 결과 확정':'◌ 제안 설명 / 표결 준비';
- const seats=vlist.length?vlist.map(([id,m])=>{const v=state.votes[mid]?.[id],choice=typeof v==='string'?v:v?.choice,cls=choice==='찬성'?'yes':choice==='반대'?'no':choice==='기권'?'abs':'none';return `<div class="seat ${cls}" title="${E(m.group)}모둠 ${E(m.name)}: ${E(choice||'미투표')}"><span>${E(m.name)}</span><small>${choice||m.group+'모둠 · 대기'}</small></div>`}).join(''):'<div class="seat none"><span>입장한 의원 없음</span></div>';
- return `<div class="board"><div class="board-title">대한민국 모의국회</div><div class="board-sub">본회의 전자표결 현황판 · ${E(status)}</div><div class="board-motion"><small>현재 상정 안건 · ${mid?mid+'모둠':'미선택'}</small><strong>${E(c?.law||'제안 설명할 법안을 선택하세요')} ${c?'일부개정법률안':''}</strong><small>${E(c?.article||'')}</small>${g?`<div class="motion-compare"><div class="motion-old"><span>기존 조항</span><div class="article">${E(c.original)}</div></div><div class="motion-new"><span>모둠이 제안한 새 조항</span><div class="article">${E(g.amend)}</div></div></div><p class="board-reason">개정 이유: ${E(g.reason)}</p>`:''}</div><div class="board-counts"><div class="board-count"><small>재적 / 표결 참여</small><b>${state.enrolled} / ${z.total}</b></div><div class="board-count yes"><small>찬성</small><b>${z.yes}</b></div><div class="board-count no"><small>반대</small><b>${z.no}</b></div><div class="board-count abs"><small>기권</small><b>${z.abs}</b></div></div><div class="board-result">${closed?E(decision()):state.voteOpen?'표결 진행 중':'제안 설명 중 · 표결 대기'}</div><div class="seatgrid">${seats}</div><div class="board-legend"><span><i class="dot yes"></i>찬성</span><span><i class="dot no"></i>반대</span><span><i class="dot abs"></i>기권</span><span><i class="dot"></i>미투표</span></div><div class="tiny" style="text-align:center;color:#a7c0dd;margin-top:11px">가결 = 통과 · 부결 = 통과하지 못함 · 참여 인원 부족 = 정해진 인원보다 적게 참여한 상태</div></div>`;
+ const seats=vlist.length?vlist.map(([id,m])=>{const v=state.votes[mid]?.[id],choice=typeof v==='string'?v:v?.choice,cls=choice==='찬성'?'yes':choice==='반대'?'no':choice==='기권'?'abs':'none';return `<div class="seat ${cls}" title="${E(groupLabel(m.group,true))} ${E(m.name)}: ${E(choice||'미투표')}"><span>${E(m.name)}</span><small>${choice||'대기'}</small></div>`}).join(''):'<div class="seat none"><span>입장한 의원 없음</span></div>';
+ return `<div class="board"><div class="board-title">대한민국 모의국회</div><div class="board-sub">본회의 전자표결 현황판 · ${E(status)}</div><div class="board-motion"><small>현재 상정 안건 · ${mid?E(groupLabel(mid,true)):'미선택'}</small><strong>${E(c?.law||'제안 설명할 법안을 선택하세요')} ${c?'일부개정법률안':''}</strong><small>${E(c?.article||'')}</small>${g?`<div class="motion-compare"><div class="motion-old"><span>기존 조항</span><div class="article">${E(c.original)}</div></div><div class="motion-new"><span>위원회가 제안한 새 조항</span><div class="article">${E(g.amend)}</div></div></div><p class="board-reason">개정 이유: ${E(g.reason)}</p>`:''}</div><div class="board-counts"><div class="board-count"><small>재적 / 표결 참여</small><b>${state.enrolled} / ${z.total}</b></div><div class="board-count yes"><small>찬성</small><b>${z.yes}</b></div><div class="board-count no"><small>반대</small><b>${z.no}</b></div><div class="board-count abs"><small>기권</small><b>${z.abs}</b></div></div><div class="board-result">${closed?E(decision()):state.voteOpen?'표결 진행 중':'제안 설명 중 · 표결 대기'}</div><div class="seatgrid">${seats}</div><div class="board-legend"><span><i class="dot yes"></i>찬성</span><span><i class="dot no"></i>반대</span><span><i class="dot abs"></i>기권</span><span><i class="dot"></i>미투표</span></div><div class="tiny" style="text-align:center;color:#a7c0dd;margin-top:11px">가결 = 통과 · 부결 = 통과하지 못함 · 참여 인원 부족 = 정해진 인원보다 적게 참여한 상태</div></div>`;
 }
-function legacyTeacherPlenary(){const options=allGroups().filter(([,g])=>g.submitted).map(([no,g])=>`<option value="${E(no)}" ${no===state.activeMotion?'selected':''}>${E(no)}모둠 · ${E(getCase(g.caseId)?.law||'법률안')}</option>`).join('');return `<div class="panel"><div class="spread"><h2>🎙 발표 안건 선택 · 본회의 진행</h2><span class="chip ${state.voteOpen?'done':state.voteEnded?'wait':''}">${state.voteOpen?'표결 중':state.voteEnded?'표결 종료':'제안 설명 준비'}</span></div><p class="intro">교사가 발표할 모둠을 선택하면 <b>그 법률안이 모든 학생의 본회의 화면에 나타납니다.</b> 제안 설명과 질의가 끝나면 표결을 시작하세요.</p><div class="two"><div><label>현재 발표 / 표결할 모둠</label><select id="motionChoice" onchange="teacherSetMotion(this.value)" ${state.voteOpen?'disabled':''}><option value="">— 제출된 법안 선택 —</option>${options}</select></div><div><label>재적의원 수 (반 전체 의원 수)</label><input type="number" min="1" max="300" value="${state.enrolled}" onchange="teacherSetEnrolled(this.value)"></div></div><div class="row" style="margin-top:15px"><button onclick="startVote()" ${state.phase!==5||!state.activeMotion||state.voteOpen?'disabled':''}>● 표결 시작</button><button class="warn" onclick="endVote()" ${!state.voteOpen?'disabled':''}>■ 표결 종료 · 결과 확정</button><span class="tiny">표결 전에는 법안 발표 화면이, 표결 중에는 투표 버튼이 학생에게 보여요.</span></div></div>${boardHtml()}<div class="panel" style="margin-top:17px"><h3>법안별 결과</h3><div class="result-list">${allGroups().filter(([,g])=>g.submitted).map(([n,g])=>{const c=getCase(g.caseId),z=tally(n),closed=!!state.closedMotions[n];return `<div class="result-card"><strong>${E(n)}모둠 · ${E(c?.law||'법률안')}</strong><div class="tiny">${E(closed?decision(n):state.voteOpen&&state.activeMotion===n?'표결 진행 중':'표결 대기')} · 참여 ${z.total}명 / 찬성 ${z.yes}명 / 반대 ${z.no}명 / 기권 ${z.abs}명</div></div>`}).join('')||'<div class="intro">제출된 법안이 없습니다.</div>'}</div></div>`}
+function legacyTeacherPlenary(){const options=allGroups().filter(([,g])=>g.submitted).map(([no,g])=>`<option value="${E(no)}" ${no===state.activeMotion?'selected':''}>${E(groupLabel(no,true))} · ${E(getCase(g.caseId)?.law||'법률안')}</option>`).join('');return `<div class="panel"><div class="spread"><h2>🎙 발표 안건 선택 · 본회의 진행</h2><span class="chip ${state.voteOpen?'done':state.voteEnded?'wait':''}">${state.voteOpen?'표결 중':state.voteEnded?'표결 종료':'제안 설명 준비'}</span></div><p class="intro">교사가 발표할 위원회를 선택하면 <b>그 법률안이 모든 학생의 본회의 화면에 나타납니다.</b> 제안 설명과 질의가 끝나면 표결을 시작하세요.</p><div class="two"><div><label>현재 발표 / 표결할 위원회</label><select id="motionChoice" onchange="teacherSetMotion(this.value)" ${state.voteOpen?'disabled':''}><option value="">— 확정된 모둠 법률안 선택 —</option>${options}</select></div><div><label>재적의원 수 (반 전체 의원 수)</label><input type="number" min="1" max="300" value="${state.enrolled}" onchange="teacherSetEnrolled(this.value)"></div></div><div class="row" style="margin-top:15px"><button onclick="startVote()" ${state.phase!==5||!state.activeMotion||state.voteOpen?'disabled':''}>● 표결 시작</button><button class="warn" onclick="endVote()" ${!state.voteOpen?'disabled':''}>■ 표결 종료 · 결과 확정</button><span class="tiny">표결 전에는 법안 발표 화면이, 표결 중에는 투표 버튼이 학생에게 보여요.</span></div></div>${boardHtml()}<div class="panel" style="margin-top:17px"><h3>법안별 결과</h3><div class="result-list">${allGroups().filter(([,g])=>g.submitted).map(([n,g])=>{const c=getCase(g.caseId),z=tally(n),closed=!!state.closedMotions[n];return `<div class="result-card"><strong>${E(groupLabel(n,true))} · ${E(c?.law||'법률안')}</strong><div class="tiny">${E(closed?decision(n):state.voteOpen&&state.activeMotion===n?'표결 진행 중':'표결 대기')} · 참여 ${z.total}명 / 찬성 ${z.yes}명 / 반대 ${z.no}명 / 기권 ${z.abs}명</div></div>`}).join('')||'<div class="intro">확정된 위원회 법률안이 없습니다.</div>'}</div></div>`}
 function backup(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='모의국회_활동_백업.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
 function resetAll(){if(!confirm('정말 모든 활동 기록과 표결을 초기화할까요?'))return;state=FRESH();sid='';sessionStorage.removeItem(SID_KEY);sessionStorage.removeItem(MANUAL_PHASE_KEY);save()}
 function renderTeacher(){el('teacher').innerHTML=teacherHeader()+(state.phase<5?teacherWork():state.phase===5?teacherPlenary():teacherGazette())+teacherPhaseResetPanel()}
@@ -787,9 +859,9 @@ function render(){renderStudent();renderTeacher()}
 const EDITION_NAME='고등학생용 · 50분 심화';
 const FLOW=[0,1,2,3,4,5,6];
 const FLOW_TIMES=[4,7,12,6,3,14,4];
-const FLOW_LABELS=['소관 상임위원회 배정','현안 및 현행법 분석','일부개정법률안 입안','체계·자구 심사','최종 법률안 확정·제출','본회의 상정·제안 설명·표결','법률 공포·관보 확인'];
-const FLOW_NOTES=['모둠 대표가 소관 상임위원회를 선택합니다.','관련 보도와 현행 조문을 바탕으로 입법 필요성을 검토합니다.','규율 대상·요건·효과를 고려하여 일부개정안을 입안합니다.','법문의 명확성 및 체계상 문제를 점검합니다.','모둠의 개정안과 개정 이유를 확정하고 제출합니다.','안건별 제안 설명을 듣고 개인별 전자표결을 진행합니다.','가결된 법률안은 공포하거나 대통령이 재의를 요구할 수 있습니다. 재의요구한 법률안만 국회에서 다시 표결합니다.'];
-const FLOW_CUES=['도입 1분: “현행 법률의 특정 조문을 개정하는 입법 모의활동”임을 설명하고, 상임위를 모둠별로 배정해 주세요.','기사의 문제의식과 법적 규율의 공백을 구분하게 하세요. 단순 의견 표현보다는 조문에 근거한 판단을 요구합니다.','조문 전체를 새로 쓸 필요는 없습니다. 현행 문언에서 변경할 부분을 특정하고 개정 이유를 논리적으로 작성하도록 안내합니다.','규칙 기반 도구가 제안한 자구 수정은 정답이 아닙니다. 개정 취지 유지 여부와 문장 명확성을 검토하도록 합니다.','모둠별 최종안을 1회 제출하고, 조장이 대표로 제출합니다.','제안 설명은 모둠당 약 1분, 전자표결과 결과 확인은 약 1분으로 진행합니다. 토론은 필수로 넣지 않습니다.','기본 50분 수업은 재의요구 없이 공포로 마칩니다. 시간이 남으면 법률안 1건 또는 여러 건을 선택해 재의요구·재의결을 진행하세요(건당 약 3~5분 추가).'];
+const FLOW_LABELS=['소관 상임위원회 배정','현안 및 현행법 분석','일부개정법률안 입안','법사위(법제사법위원회) 체계·자구 심사','법률안 최종 확정','본회의 상정·제안 설명·표결','법률 공포·관보 확인'];
+const FLOW_NOTES=['모둠 대표가 소관 상임위원회를 선택합니다.','관련 보도와 현행 조문을 바탕으로 입법 필요성을 검토합니다.','규율 대상·요건·효과를 고려하여 일부개정안을 입안합니다.','소관 상임위원회 활동과 구분하여, 법제사법위원회(법사위)의 체계·자구 심사를 공통으로 체험합니다.','위원회 의원별 최종 확인 후 위원장이 법률안의 문안과 개정 이유를 확정합니다.','안건별 제안 설명을 듣고 개인별 전자표결을 진행합니다.','가결된 법률안은 공포하거나 대통령이 재의를 요구할 수 있습니다. 재의요구한 법률안만 국회에서 다시 표결합니다.'];
+const FLOW_CUES=['도입 1분: “현행 법률의 특정 조문을 개정하는 입법 모의활동”임을 설명하고, 상임위를 모둠별로 배정해 주세요.','기사의 문제의식과 법적 규율의 공백을 구분하게 하세요. 단순 의견 표현보다는 조문에 근거한 판단을 요구합니다.','조문 전체를 새로 쓸 필요는 없습니다. 현행 문언에서 변경할 부분을 특정하고 개정 이유를 논리적으로 작성하도록 안내합니다.','지금은 소관 상임위원회 활동이 아닌 공통 법사위 심사 단계입니다. 규칙 기반 검토 결과는 정답이 아니므로 개정 취지와 법문 명확성을 학생들이 재확인하게 하세요.','위원회 의원별 확인을 받은 뒤 위원장이 최종안을 확정합니다. 실제 국회의 법률안 발의·제출 절차와는 구분합니다.','제안 설명은 모둠당 약 1분, 전자표결과 결과 확인은 약 1분으로 진행합니다. 토론은 필수로 넣지 않습니다.','기본 50분 수업은 재의요구 없이 공포로 마칩니다. 시간이 남으면 법률안 1건 또는 여러 건을 선택해 재의요구·재의결을 진행하세요(건당 약 3~5분 추가).'];
 
 
 function lessonBars(){const ix=FLOW.indexOf(state.phase);return `<div class="lesson-line">${FLOW.map((stage,j)=>`<div title="${E(FLOW_LABELS[j])} ${FLOW_TIMES[j]}분" class="bar ${j<ix?'past':j===ix?'active':''}" style="flex:${FLOW_TIMES[j]}"></div>`).join('')}</div>`}
@@ -801,24 +873,24 @@ function enhancedTeacherPlenary(){let html=legacyTeacherPlenary();html=html.repl
 function teacherHeader(){return editionTeacherHeader()}
 function rails(){return editionRails()}
 
-function entry(){return legacyEntry().replace('오늘은 여러분이<br>국회의원입니다!','국회의 입법 절차를<br>직접 경험합니다').replace('모둠 번호와 이름을 입력하면 의원으로 입장해요.','모둠과 이름을 등록하여 의원 자격으로 입장합니다.').replace('조장은 모둠의 상임위원회를 정하고 최종 법안을 제출','조장은 소관 상임위원회를 지정하고 최종 법률안을 제출')}
+function entry(){return legacyEntry().replace('오늘은 여러분이<br>국회의원입니다!','국회의 입법 절차를<br>직접 경험합니다').replace('모둠 번호와 이름을 입력하면 의원으로 입장해요.','모둠과 이름을 등록하여 의원 자격으로 입장합니다.').replace('조장은 모둠의 상임위원회를 정하고 최종 법률안을 확정','조장은 소관 상임위원회를 선택하며, 위원회 확정 후에는 위원장으로서 최종 법률안을 확정')}
 
 function committeeScreen(){return legacyCommitteeScreen().replace('우리 모둠의 상임위원회 정하기','소관 상임위원회 배정').replace('상임위원회는 국회에서 분야별 법안을 먼저 살펴보는 곳이에요.','상임위원회는 분야별 소관 법률안의 심사를 담당하는 국회의 위원회입니다.').replace('다른 모둠이 고른 곳은 선택할 수 없어요.','다른 모둠이 선택한 위원회는 중복 배정하지 않습니다.')}
 
 function originalBox(c,full=true){return legacyOriginalBox(c,full).replace('현행 조문 원문','현행 조문 (원문)').replace('💬 쉽게 풀면?','현행 규정 해설')}
 
 function readingScreen(){return legacyReadingScreen().replace('2단계 · 기사에서 문제 찾기','현안 분석 · 입법 필요성 검토').replace('우리 반에 이런 일이 생겼다면?','적용 사례 분석').replace('지금 법이 이미 정한 것은?','현행법의 규율 내용').replace('더 고민할 문제는?','입법상 쟁점').replace('우리 모둠의 입법 과제','개정 검토 대상 및 입법 과제').replace('의견 나누기','입법 필요성과 대안 검토')}
-function writingScreen(){const c=myCase(),g=myGroup();if(!c||!g)return '<div class="panel">법률안 작성 대상이 없습니다.</div>';return `<div class="panel"><div class="spread"><h2>일부개정법률안 입안</h2><span class="chip">${E(articleLabel(c))} · 특정 조항 개정</span></div><p class="intro">현행법의 <b>규율 대상(누가), 적용 요건(언제), 법적 효과(무엇을)</b>를 검토한 뒤 필요한 문언을 수정하세요. 원문의 기본 체계를 유지해도 됩니다.</p>${originalBox(c)}<div class="lesson-legal-tip"><span>⚖</span><div><b>입안 과제</b><br>${E(c.task)}<br>개정으로 해결할 문제와 예상되는 영향이 일치하는지 점검하세요.</div></div><div class="draft-tools"><button class="soft" onclick="loadOriginalToDraft()" ${g.submitted?'disabled':''}>📋 현행 조문 불러와 수정하기</button></div><label for="amend">개정 조문 본문</label><div class="draft-editor"><div class="fixed-article"><strong>${E(articleLabel(c))}</strong></div><textarea id="amend" ${g.submitted?'disabled':''} placeholder="현행 조문의 표현을 살려 개정할 본문만 작성하세요." oninput="updateField('amend',this.value)">${E(g.amend)}</textarea></div><p class="tiny">조·항·호 표기는 자동 표시됩니다. 번호 대신 본문의 개정 내용에 집중하세요.</p><label for="reason">개정 이유 및 입법 취지</label><textarea id="reason" style="min-height:100px" ${g.submitted?'disabled':''} placeholder="현행 규정의 한계와 개정 시 기대되는 효과를 서술하세요." oninput="updateField('reason',this.value)">${E(g.reason)}</textarea><label for="effect">부칙: 시행일 선택</label><select id="effect" ${g.submitted?'disabled':''} onchange="updateField('effect',this.value)">${['공포한 날부터','공포 후 3개월','공포 후 6개월','공포 후 1년','공포 후 2년'].map(x=>`<option ${g.effect===x?'selected':''}>${E(x)}</option>`).join('')}</select><p class="tiny">시행일은 행정적 준비 기간이나 이해관계자의 적응 기간을 고려하여 결정할 수 있습니다.</p>${stageDoneButton(2)}</div>`}
+function writingScreen(){const c=myCase(),g=myGroup();if(!c||!g)return '<div class="panel">법률안 작성 대상이 없습니다.</div>';return `<div class="panel"><div class="spread"><h2>${E(groupLabel(myNum()))} · 일부개정법률안 입안</h2><span class="chip">${E(articleLabel(c))} · 특정 조항 개정</span></div><p class="intro">현행법의 <b>규율 대상(누가), 적용 요건(언제), 법적 효과(무엇을)</b>를 검토한 뒤 필요한 문언을 수정하세요. 원문의 기본 체계를 유지해도 됩니다.</p>${originalBox(c)}<div class="lesson-legal-tip"><span>⚖</span><div><b>입안 과제</b><br>${E(c.task)}<br>개정으로 해결할 문제와 예상되는 영향이 일치하는지 점검하세요.</div></div><div class="draft-tools"><button class="soft" onclick="loadOriginalToDraft()" ${g.submitted?'disabled':''}>📋 현행 조문 불러와 수정하기</button></div><label for="amend">개정 조문 본문</label><div class="draft-editor"><div class="fixed-article"><strong>${E(articleLabel(c))}</strong></div><textarea id="amend" ${g.submitted?'disabled':''} placeholder="현행 조문의 표현을 살려 개정할 본문만 작성하세요." oninput="updateField('amend',this.value)">${E(g.amend)}</textarea></div><p class="tiny">조·항·호 표기는 자동 표시됩니다. 번호 대신 본문의 개정 내용에 집중하세요.</p><label for="reason">개정 이유 및 입법 취지</label><textarea id="reason" style="min-height:100px" ${g.submitted?'disabled':''} placeholder="현행 규정의 한계와 개정 시 기대되는 효과를 서술하세요." oninput="updateField('reason',this.value)">${E(g.reason)}</textarea><label for="effect">부칙: 시행일 선택</label><select id="effect" ${g.submitted?'disabled':''} onchange="updateField('effect',this.value)">${['공포한 날부터','공포 후 3개월','공포 후 6개월','공포 후 1년','공포 후 2년'].map(x=>`<option ${g.effect===x?'selected':''}>${E(x)}</option>`).join('')}</select><p class="tiny">시행일은 행정적 준비 기간이나 이해관계자의 적응 기간을 고려하여 결정할 수 있습니다.</p>${stageDoneButton(2)}</div>`}
 
-function reviewScreen(){return legacyReviewScreen().replace('⚖ 법제사법위원회 · 체계·자구 심사','⚖ 법제사법위원회 · 체계·자구 심사').replace('법사위에서는 <b>조문의 순서와 표현</b>에 문제가 없는지 확인해요.','체계 심사는 조문 간 정합성 및 입법체계를, 자구 심사는 문언의 명확성·통일성을 검토하는 절차입니다.').replace('자동 검토 의견','자구 검토 의견 (규칙 기반)').replace('검토 내용을 반영한 수정안','자구 정비 제안문').replace('직접 수정할 법률 문장','직접 수정할 개정 조문')}
+function reviewScreen(){return legacyReviewScreen().replace('<h2>⚖ 법제사법위원회 · 체계·자구 심사</h2>','<div class="chip dark" style="margin-bottom:12px">4단계 · 공통 법사위 심사 단계</div><h2>⚖ 법제사법위원회(법사위) · 체계·자구 심사</h2>').replace('법사위에서는 <b>조문의 순서와 표현</b>에 문제가 없는지 확인해요.','체계 심사는 조문 간 정합성 및 입법체계를, 자구 심사는 문언의 명확성·통일성을 검토하는 절차입니다.').replace('자동 검토 의견','자구 검토 의견 (규칙 기반)').replace('검토 내용을 반영한 수정안','자구 정비 제안문').replace('직접 수정할 법률 문장','직접 수정할 개정 조문').replace('<div class="two">','<div class="lesson-legal-tip"><span>⚖</span><div><b>지금은 법사위(법제사법위원회) 심사 단계입니다.</b> 앞 단계에서 맡은 소관 상임위원회와는 별도로, 모든 위원회가 공통으로 체계·자구 심사를 체험합니다. 이 단계의 ‘위원장’은 원래 소관 상임위원회에서 맡은 직책을 뜻하며, 공통 법사위 심사 단계에서 새로 임명된 법사위원장을 뜻하지 않습니다.</div></div><div class="two">')}
 
 function studentPlenary(){return legacyStudentPlenary().replace('발표를 듣고 법률안의 장점과 걱정되는 점을 생각해 보세요.','제안 설명을 듣고 개정 취지·규율 내용·예상 효과를 검토하세요.').replace('교사가 표결을 시작하면 찬성·반대·기권을 선택할 수 있어요.','표결이 개시되면 찬성·반대·기권 중 하나를 선택하세요.')}
 function teacherPlenary(){return enhancedTeacherPlenary().replace('제안 설명과 질의가 끝나면 표결을 시작하세요.','제안 설명을 듣고 표결을 시작하세요.')}
 function teacherWork(){return legacyTeacherWork()}
 function studentGazette(){return legacyStudentGazette()}
 function teacherGazette(){return legacyTeacherGazette()}
-function academicGlossary(){return `<details class="academic-glossary"><summary>📖 입법 활동 핵심 용어 · 누르면 뜻을 확인할 수 있습니다</summary><div class="glossary-list"><p><b>소관 상임위원회</b> 특정 분야의 법률안을 심사하는 국회 위원회</p><p><b>일부개정법률안</b> 법률 전체가 아니라 일부 조항을 개정하는 법률안</p><p><b>입법 취지</b> 법률을 개정하려는 목적과 근거</p><p><b>규율 대상·요건·효과</b> 누구에게 / 어떤 조건에서 / 무엇을 요구·허용하는지</p><p><b>체계·자구 심사</b> 조문 간 정합성과 문언의 정확성을 점검하는 심사</p><p><b>상정</b> 안건을 본회의의 심의·표결 대상으로 올리는 일</p><p><b>재적의원</b> 현재 의원으로 등록된 사람(수업에서는 교사가 입력한 학급 의원 수)</p><p><b>의결정족수</b> 의결이 성립하기 위해 필요한 출석 및 찬성 인원</p><p><b>부칙·시행일</b> 법률의 시행 시점 등을 정하는 규정</p><p><b>공포·관보</b> 법률을 공식적으로 알리는 절차 / 그 공고문이 실리는 매체</p><p><b>재의요구권</b> 대통령이 법률안에 이의가 있을 때 국회에 다시 심의·의결하도록 요구하는 권한(헌법 제53조)</p><p><b>재의결</b> 재의요구를 받은 법률안을 다시 표결하는 것. 재적의원 과반수 출석과 출석의원 3분의 2 이상 찬성이 필요</p></div></details>`}
-function renderStudent(){const root=el('student');if(!me()){root.innerHTML=entry();return;}root.innerHTML=memberHeader()+`<div class="edition-intro"><div class="edition-top"><strong>고등학교 입법 심화활동</strong><span class="time-chip">현재 단계 ${FLOW_TIMES[state.phase]}분 / 전체 50분</span></div><p>현행법 분석 → 일부개정안 입안 → 체계·자구 심사 → 본회의 의결 → 법률 공포의 절차를 실습합니다.</p></div>`+rails()+[committeeScreen,readingScreen,writingScreen,reviewScreen,submitScreen,studentPlenary,studentGazette][state.phase]()+academicGlossary()}
+function academicGlossary(){return `<details class="academic-glossary"><summary>📖 입법 활동 핵심 용어 · 누르면 뜻을 확인할 수 있습니다</summary><div class="glossary-list"><p><b>소관 상임위원회</b> 특정 분야의 법률안을 심사하는 국회 위원회</p><p><b>일부개정법률안</b> 법률 전체가 아니라 일부 조항을 개정하는 법률안</p><p><b>입법 취지</b> 법률을 개정하려는 목적과 근거</p><p><b>규율 대상·요건·효과</b> 누구에게 / 어떤 조건에서 / 무엇을 요구·허용하는지</p><p><b>법사위(법제사법위원회) 체계·자구 심사</b> 소관 상임위원회 심사와 구분하여 조문 간 정합성·문언의 정확성을 점검하는 절차</p><p><b>상정</b> 안건을 본회의의 심의·표결 대상으로 올리는 일</p><p><b>재적의원</b> 현재 의원으로 등록된 사람(수업에서는 교사가 입력한 학급 의원 수)</p><p><b>의결정족수</b> 의결이 성립하기 위해 필요한 출석 및 찬성 인원</p><p><b>부칙·시행일</b> 법률의 시행 시점 등을 정하는 규정</p><p><b>공포·관보</b> 법률을 공식적으로 알리는 절차 / 그 공고문이 실리는 매체</p><p><b>재의요구권</b> 대통령이 법률안에 이의가 있을 때 국회에 다시 심의·의결하도록 요구하는 권한(헌법 제53조)</p><p><b>재의결</b> 재의요구를 받은 법률안을 다시 표결하는 것. 재적의원 과반수 출석과 출석의원 3분의 2 이상 찬성이 필요</p></div></details>`}
+function renderStudent(){const root=el('student');if(!me()){root.innerHTML=entry();return;}root.innerHTML=memberHeader()+`<div class="edition-intro"><div class="edition-top"><strong>고등학교 입법 심화활동</strong><span class="time-chip">현재 단계 ${FLOW_TIMES[state.phase]}분 / 전체 50분</span></div><p>현행법 분석 → 일부개정안 입안 → 법사위 체계·자구 심사 → 본회의 의결 → 법률 공포의 절차를 실습합니다.</p></div>`+rails()+[committeeScreen,readingScreen,writingScreen,reviewScreen,submitScreen,studentPlenary,studentGazette][state.phase]()+academicGlossary()}
 function decision(id=state.activeMotion){const z=tally(id),enrolled=Math.max(1,Number(state.enrolled)||1);if(z.total<Math.floor(enrolled/2)+1)return '의결정족수 미달 · 재적의원 과반수 미출석';return z.yes>z.total/2?'가결 · 출석의원 과반수 찬성':'부결 · 출석의원 과반수 찬성 미달'}
 
 function boardHtml(){return legacyBoardHtml().replace('가결 = 통과 · 부결 = 통과하지 못함 · 참여 인원 부족 = 정해진 인원보다 적게 참여한 상태','본 모의수업에서는 투표를 제출한 인원을 출석 인원으로 계산합니다. 일반 의결: 재적 과반수 출석 + 출석 과반수 찬성.')}
@@ -831,13 +903,13 @@ function teacherSubmissionDashboard(isMiddle){
  const people=rows.flatMap(([no,g])=>membersOf(no).map(m=>({m,g})));
  const confirmCount=people.filter(({m,g})=>marked(g,phase,m.id)).length;
  const allChecked=rows.filter(([no,g])=>{const m=membersOf(no);return m.length>0&&m.every(x=>marked(g,phase,x.id))}).length;
- const head=isMiddle?'최종 법률안 확인 · 조장 제출 현황':'최종안 확인 현황 · 본회의 제출 현황';
- const note=isMiddle?'의원은 자신이 고친 법안의 내용을 확인한 뒤 「최종안 확인 완료」를 누릅니다. 조장은 별도로 「우리 모둠 법안 제출하기」를 눌러야 합니다.':'각 의원은 확정할 법률안을 읽고 「최종안 확인 완료」를 누릅니다. 이 확인은 제출과 다르며, 조장이 「최종 제출」을 따로 진행합니다.';
- return `<div class="panel submission-dashboard"><div class="spread"><h2>${head}</h2><span class="chip">현재 단계 · ${E(FLOW_LABELS[FLOW.indexOf(state.phase)]||'')}</span></div><div class="submission-note"><strong>확인 ≠ 제출</strong><br>${E(note)}</div><div class="submission-summary"><div class="submission-metric"><small>활동 모둠</small><b>${rows.length}</b></div><div class="submission-metric"><small>의원별 최종 확인</small><b>${confirmCount}<span style="font-size:16px"> / ${people.length}명</span></b></div><div class="submission-metric"><small>전원 확인한 모둠</small><b>${allChecked}<span style="font-size:16px"> / ${rows.length}</span></b></div><div class="submission-metric"><small>조장이 최종 제출한 모둠</small><b>${submitCount}<span style="font-size:16px"> / ${rows.length}</span></b></div></div><div class="submission-grid">${rows.length?rows.map(([no,g])=>{
+ const head=isMiddle?'최종 법률안 확인 · 위원장 확정 현황':'최종안 확인 현황 · 위원회 확정 현황';
+ const note=isMiddle?'의원은 법안을 읽고 「최종안 확인 완료」를 누릅니다. 위원장은 별도로 위원회 법률안을 최종 확정합니다.':'의원은 확정할 법률안을 읽고 「최종안 확인 완료」를 누릅니다. 개별 확인과 위원회의 최종 확정은 서로 다르며, 위원장이 최종 확정합니다.';
+ return `<div class="panel submission-dashboard"><div class="spread"><h2>${head}</h2><span class="chip">현재 단계 · ${E(FLOW_LABELS[FLOW.indexOf(state.phase)]||'')}</span></div><div class="submission-note"><strong>개별 확인 ≠ 위원회 법률안 최종 확정</strong><br>${E(note)}</div><div class="submission-summary"><div class="submission-metric"><small>활동 모둠</small><b>${rows.length}</b></div><div class="submission-metric"><small>의원별 최종 확인</small><b>${confirmCount}<span style="font-size:16px"> / ${people.length}명</span></b></div><div class="submission-metric"><small>전원 확인한 모둠</small><b>${allChecked}<span style="font-size:16px"> / ${rows.length}</span></b></div><div class="submission-metric"><small>위원장이 최종 확정한 위원회</small><b>${submitCount}<span style="font-size:16px"> / ${rows.length}</span></b></div></div><div class="submission-grid">${rows.length?rows.map(([no,g])=>{
   const c=getCase(g.caseId),members=membersOf(no),completed=members.filter(m=>marked(g,phase,m.id));
   const leader=getLeader(no),pct=members.length?Math.round(completed.length/members.length*100):0;
-  return `<div class="submission-card"><div class="submission-card-title"><div><b>${E(no)}모둠</b><small>${E(c?.committee||'상임위 선택 전')}</small></div><span class="submission-state ${g.submitted?'sent':''}">${g.submitted?'✓ 최종 제출 완료':'● 조장 제출 대기'}</span></div><div class="submission-section"><div class="submission-section-top"><strong>① 의원별 최종안 확인</strong><b>${completed.length} / ${members.length}명</b></div><div class="submission-track"><div class="submission-fill" style="width:${pct}%"></div></div><div class="submission-members">${members.length?members.map(m=>`<span class="submission-member ${marked(g,phase,m.id)?'confirmed':''}">${leader?.id===m.id?'★ ':''}${E(m.name)} · ${marked(g,phase,m.id)?'확인 완료':'미확인'}</span>`).join(''):'<span class="submission-member">등록된 의원 없음</span>'}</div></div><div class="submission-section"><div class="submission-section-top"><strong>② 조장의 최종 법률안 제출</strong></div><div class="submission-submit"><span>담당 조장: <b>${E(leader?.name||'미지정')} 의원</b></span><span class="submission-state ${g.submitted?'sent':''}">${g.submitted?'제출 완료':'미제출'}</span></div></div>${g.amend?`<details class="submission-details"><summary>법률안 원문·개정안 보기</summary><div class="pre">${E(artifact(g))}</div></details>`:''}</div>`;
- }).join(''):'<div class="small-warn">아직 입장한 모둠이 없어요. 학생이 입장하면 최종 확인과 제출 현황이 각각 나타납니다.</div>'}</div></div>`;
+  return `<div class="submission-card"><div class="submission-card-title"><div><b>${E(groupLabel(no,true))}</b><small>${E(c?.law||'상임위원회 배정 전')}</small></div><span class="submission-state ${g.submitted?'sent':''}">${g.submitted?'✓ 최종 확정 완료':`● ${E(roleLabel(no))} 확정 대기`}</span></div><div class="submission-section"><div class="submission-section-top"><strong>① 의원별 최종안 확인</strong><b>${completed.length} / ${members.length}명</b></div><div class="submission-track"><div class="submission-fill" style="width:${pct}%"></div></div><div class="submission-members">${members.length?members.map(m=>`<span class="submission-member ${marked(g,phase,m.id)?'confirmed':''}">${leader?.id===m.id?`★ ${E(roleLabel(no))} `:''}${E(m.name)} · ${marked(g,phase,m.id)?'확인 완료':'미확인'}</span>`).join(''):'<span class="submission-member">등록된 의원 없음</span>'}</div></div><div class="submission-section"><div class="submission-section-top"><strong>② ${E(roleLabel(no))}의 위원회 법률안 최종 확정</strong></div><div class="submission-submit"><span>담당 ${E(roleLabel(no))}: <b>${E(leader?.name||'미지정')} 의원</b></span><span class="submission-state ${g.submitted?'sent':''}">${g.submitted?'확정 완료':'확정 전'}</span></div></div>${g.amend?`<details class="submission-details"><summary>법률안 원문·개정안 보기</summary><div class="pre">${E(artifact(g))}</div></details>`:''}</div>`;
+ }).join(''):'<div class="small-warn">아직 입장한 모둠이 없어요. 학생이 입장하면 최종 확인과 확정 현황이 각각 나타납니다.</div>'}</div></div>`;
 }
 
 function teacherWork(){return state.phase===4?teacherSubmissionDashboard(false):legacyTeacherWork()}
@@ -849,7 +921,7 @@ function teacherWork(){return state.phase===4?teacherSubmissionDashboard(false):
 function reconsiderOf(id){return state.reconsiderations?.[String(id)]||null}
 function activeReconsiderationVoting(){return Object.entries(state.reconsiderations||{}).find(([,r])=>r.status==='voting')?.[0]||''}
 function cannotPromulgateReason(id){
- if(!state.groups[id]?.submitted)return '제출된 법률안이 없습니다.';
+ if(!state.groups[id]?.submitted)return '확정된 위원회 법률안이 없습니다.';
  if(!state.closedMotions[id])return '먼저 최초 본회의 표결을 마쳐야 합니다.';
  if(!isPassed(id))return '본회의에서 가결되지 않아 공포할 수 없습니다.';
  if(state.promulgations[id])return '이미 모의 공포한 법률입니다.';
@@ -882,7 +954,7 @@ function lawStatus(id){
 }
 function setGazetteSelection(id){
  if(activeReconsiderationVoting())return alert('진행 중인 재표결부터 종료해 주세요.');
- if(id&&!state.groups[id]?.submitted)return alert('제출된 법률안을 선택해 주세요.');
+ if(id&&!state.groups[id]?.submitted)return alert('최종 확정된 모둠 법률안을 선택해 주세요.');
  state.gazetteSelected=id;
  state.reconsiderationActive=reconsiderOf(id)?id:'';
  save();
@@ -894,7 +966,7 @@ function requestReconsideration(id){
  if(state.promulgations[id])return alert('이미 공포한 법률에는 재의를 요구할 수 없습니다.');
  if(reconsiderOf(id))return alert('이미 이 법률안에 재의요구를 했습니다.');
  const c=getCase(state.groups[id].caseId);
- if(!confirm(`대통령이 ${id}모둠의 「${c?.law||'법률'} 일부개정법률안」 전체에 대해 재의를 요구할까요?\n\n재의요구 뒤에는 원안 그대로 국회에서 재표결해야 합니다.`))return;
+ if(!confirm(`대통령이 ${groupLabel(id,true)}의 「${c?.law||'법률'} 일부개정법률안」 전체에 대해 재의를 요구할까요?\n\n재의요구 뒤에는 원안 그대로 국회에서 재표결해야 합니다.`))return;
  state.reconsiderations[id]={status:'requested',requestedAt:Date.now(),votes:{},enrolledAtVote:0,decidedAt:null};
  state.reconsiderationActive=id;
  state.gazetteSelected=id;
@@ -903,7 +975,7 @@ function requestReconsideration(id){
 function beginReconsideration(id){
  const r=reconsiderOf(id);
  if(state.phase!==6||!r||!['requested','quorum'].includes(r.status))return alert('재표결할 수 있는 상태가 아닙니다.');
- const other=activeReconsiderationVoting();if(other&&other!==id)return alert(other+'모둠의 재표결이 진행 중입니다. 먼저 종료해 주세요.');
+ const other=activeReconsiderationVoting();if(other&&other!==id)return alert(groupLabel(other,true)+'의 재표결이 진행 중입니다. 먼저 종료해 주세요.');
  if(r.status==='quorum'&&!confirm('이전 재표결은 출석 정족수가 부족했습니다. 표결 기록을 초기화하고 다시 시작할까요?'))return;
  r.votes={};r.status='voting';r.enrolledAtVote=Math.max(1,Number(state.enrolled)||1);r.decidedAt=null;
  state.gazetteSelected=id;state.reconsiderationActive=id;
@@ -930,15 +1002,15 @@ function endReconsideration(id){
 function presidentialInfo(){return `<div class="constitution-note"><b>헌법 제53조 · 대통령의 재의요구권</b><br>국회에서 가결한 법률안은 정부로 이송됩니다. 대통령은 이의가 있으면 <b>15일 이내에 이의서를 붙여 법률안 전체에 대해 재의를 요구</b>할 수 있습니다. 국회가 다시 의결할 때는 <b>재적의원 과반수 출석 + 출석의원 3분의 2 이상 찬성</b>이 필요합니다. 이미 공포한 법률안에는 재의요구를 할 수 없습니다.<br><span style="color:#526d87">수업에서는 실제 정부 이송 기간과 이의서 작성을 생략하여 절차를 시연합니다. 이 절차는 선택 활동이며, 재의요구를 생략하면 바로 모의 공포할 수 있습니다.</span></div>`}
 function returnLetter(id){
  const r=reconsiderOf(id),g=state.groups[id],c=getCase(g?.caseId);if(!r||!g||!c)return '';
- return `<div class="return-letter"><div class="spread"><h3>대통령 재의요구서 · 모의 문서</h3><span class="chip wait">법률안 전체에 재의요구</span></div><b>${E(id)}모둠 · ${E(c.law)} 일부개정법률안</b><p class="intro">헌법 제53조에 따라 아래 법률안의 재의를 국회에 요구합니다. 국회는 <b>원래 가결했던 법률안 그대로</b> 재표결합니다.</p><div class="note-bar">교사가 대통령의 재의요구를 시연했습니다. 실제로는 대통령이 이의서를 첨부해야 하지만, 이 수업에서는 이의서 작성을 생략하고 재의결 절차를 체험합니다.</div></div>`;
+ return `<div class="return-letter"><div class="spread"><h3>대통령 재의요구서 · 모의 문서</h3><span class="chip wait">법률안 전체에 재의요구</span></div><b>${E(groupLabel(id,true))} · ${E(c.law)} 일부개정법률안</b><p class="intro">헌법 제53조에 따라 아래 법률안의 재의를 국회에 요구합니다. 국회는 <b>원래 가결했던 법률안 그대로</b> 재표결합니다.</p><div class="note-bar">교사가 대통령의 재의요구를 시연했습니다. 실제로는 대통령이 이의서를 첨부해야 하지만, 이 수업에서는 이의서 작성을 생략하고 재의결 절차를 체험합니다.</div></div>`;
 }
 function reconsiderationBoard(id){
  const r=reconsiderOf(id),g=state.groups[id],c=getCase(g?.caseId);if(!r||!g||!c)return '';
  const t=revoteThreshold(id),d=revoteDecision(id),closed=['passed','failed','quorum'].includes(r.status);
  const voting=r.status==='voting';
  const members=Object.values(state.members).sort((a,b)=>Number(a.group)-Number(b.group)||a.name.localeCompare(b.name,'ko'));
- const seats=members.length?members.map(m=>{const choice=r.votes[m.id]?.choice||'',cls=choice==='찬성'?'yes':choice==='반대'?'no':choice==='기권'?'abs':'none';return `<div class="seat ${cls}" title="${E(m.group)}모둠 ${E(m.name)}: ${E(choice||'미투표')}"><span>${E(m.name)}</span><small>${E(choice||m.group+'모둠 · 대기')}</small></div>`}).join(''):'<div class="seat none">등록된 의원 없음</div>';
- return `<div class="board revote-board"><div class="board-title">대한민국 모의국회</div><div class="board-sub">대통령 재의요구에 따른 국회 재의결 · ${voting?'● 재표결 진행 중':closed?'■ 재의결 결과 확정':'재표결 대기'}</div><div class="board-motion"><small>재의결 안건 · ${E(id)}모둠</small><strong>${E(c.law)} 일부개정법률안</strong><small>${E(c.article)}</small><div class="motion-compare"><div><span>현행 조항</span><div class="article">${E(c.original)}</div></div><div><span>재의결에 부친 개정안 (원안 유지)</span><div class="article">${E(g.amend)}</div></div></div></div><div class="board-counts"><div class="board-count"><small>재적 / 출석</small><b>${t.enrolled} / ${t.total}</b></div><div class="board-count yes"><small>찬성</small><b>${t.yes}</b></div><div class="board-count no"><small>반대</small><b>${t.no}</b></div><div class="board-count abs"><small>기권</small><b>${t.abs}</b></div></div><div class="board-result">${closed?E(d.title):voting?'● 국회 재표결 진행 중':'재의결 준비 중'}</div><div class="seatgrid">${seats}</div><div class="board-legend"><span><i class="dot yes"></i>찬성</span><span><i class="dot no"></i>반대</span><span><i class="dot abs"></i>기권</span><span><i class="dot"></i>미투표</span></div><p style="text-align:center;color:#c3d8ee;font-size:13px">재적의원 과반수 출석 <b>${t.attendanceMin}명 이상</b> · 출석의원 3분의 2 이상 찬성 <b>${t.yesMin}명 이상</b> (현재 출석 기준)</p></div>`;
+ const seats=members.length?members.map(m=>{const choice=r.votes[m.id]?.choice||'',cls=choice==='찬성'?'yes':choice==='반대'?'no':choice==='기권'?'abs':'none';return `<div class="seat ${cls}" title="${E(groupLabel(m.group,true))} ${E(m.name)}: ${E(choice||'미투표')}"><span>${E(m.name)}</span><small>${E(choice||'대기')}</small></div>`}).join(''):'<div class="seat none">등록된 의원 없음</div>';
+ return `<div class="board revote-board"><div class="board-title">대한민국 모의국회</div><div class="board-sub">대통령 재의요구에 따른 국회 재의결 · ${voting?'● 재표결 진행 중':closed?'■ 재의결 결과 확정':'재표결 대기'}</div><div class="board-motion"><small>재의결 안건 · ${E(groupLabel(id,true))}</small><strong>${E(c.law)} 일부개정법률안</strong><small>${E(c.article)}</small><div class="motion-compare"><div><span>현행 조항</span><div class="article">${E(c.original)}</div></div><div><span>재의결에 부친 개정안 (원안 유지)</span><div class="article">${E(g.amend)}</div></div></div></div><div class="board-counts"><div class="board-count"><small>재적 / 출석</small><b>${t.enrolled} / ${t.total}</b></div><div class="board-count yes"><small>찬성</small><b>${t.yes}</b></div><div class="board-count no"><small>반대</small><b>${t.no}</b></div><div class="board-count abs"><small>기권</small><b>${t.abs}</b></div></div><div class="board-result">${closed?E(d.title):voting?'● 국회 재표결 진행 중':'재의결 준비 중'}</div><div class="seatgrid">${seats}</div><div class="board-legend"><span><i class="dot yes"></i>찬성</span><span><i class="dot no"></i>반대</span><span><i class="dot abs"></i>기권</span><span><i class="dot"></i>미투표</span></div><p style="text-align:center;color:#c3d8ee;font-size:13px">재적의원 과반수 출석 <b>${t.attendanceMin}명 이상</b> · 출석의원 3분의 2 이상 찬성 <b>${t.yesMin}명 이상</b> (현재 출석 기준)</p></div>`;
 }
 function teacherGazette(){
  const bills=allGroups().filter(([,g])=>g.submitted);
@@ -951,7 +1023,7 @@ function teacherGazette(){
  const isCurrentlyPassed=chosen&&state.closedMotions[chosen]&&isPassed(chosen);
  const canVeto=isCurrentlyPassed&&!r&&!state.promulgations[chosen]&&!openVoteId;
  const canPublish=chosen&&canPromulgate(chosen)&&!openVoteId;
- const statusHtml=bills.map(([id,g])=>{const cl=getCase(g.caseId);return `<div class="presidential-status ${state.promulgations[id]?'passed':reconsiderOf(id)?.status==='failed'?'failed':''}"><strong>${E(id)}모둠 · ${E(cl?.law||'법률안')}</strong><small>${E(lawStatus(id))}</small></div>`}).join('');
+ const statusHtml=bills.map(([id,g])=>{const cl=getCase(g.caseId);return `<div class="presidential-status ${state.promulgations[id]?'passed':reconsiderOf(id)?.status==='failed'?'failed':''}"><strong>${E(groupLabel(id,true))} · ${E(cl?.law||'법률안')}</strong><small>${E(lawStatus(id))}</small></div>`}).join('');
  const choiceStatus=chosen?lawStatus(chosen):'최초 본회의 표결을 완료한 법률안이 없습니다.';
  let actions='';
  if(chosen&&isCurrentlyPassed&&!r&&!state.promulgations[chosen]){
@@ -959,8 +1031,8 @@ function teacherGazette(){
  }else if(r){
    actions=`${returnLetter(chosen)}<div class="panel soft-panel" style="margin-top:12px"><div class="spread"><div><h3>국회의 재의결 진행</h3><div class="tiny">${E(lawStatus(chosen))}</div></div><div class="row">${['requested','quorum'].includes(r.status)?`<button onclick="beginReconsideration('${E(chosen)}')" ${!!openVoteId?'disabled':''}>● 국회 재표결 시작</button>`:''}${r.status==='voting'?`<button class="warn" onclick="endReconsideration('${E(chosen)}')">■ 재표결 종료 · 결과 확정</button>`:''}${r.status==='passed'?`<button onclick="promulgateLaw('${E(chosen)}')" ${!canPublish?'disabled':''}>✒ 재의결 확정 법률 모의 공포</button>`:''}</div></div>${['requested','quorum'].includes(r.status)?`<p class="tiny">재의요구를 받았으므로 즉시 공포할 수 없습니다. ${r.status==='quorum'?'재적의원 과반수 출석에 미달해 재표결을 다시 열 수 있습니다.':'선생님이 재표결을 시작하면 학생들에게 전자표결 화면이 나타납니다.'}</p>`:''}${r.status==='passed'?`<div class="note-bar">국회 재의결로 법률이 확정됐습니다. 대통령 명의로 모의 공포할 수 있습니다.</div>`:''}${r.status==='failed'?`<div class="small-warn">출석 정족수는 충족했으나 출석의원 3분의 2 이상이 찬성하지 않아 법률안이 폐기됩니다. 공포할 수 없습니다.</div>`:''}</div>${r.status!=='requested'?reconsiderationBoard(chosen):''}`;
  }else if(chosen){actions=`<div class="gazette-wait"><h3>${E(choiceStatus)}</h3><p>가결된 법률안만 공포하거나 대통령이 재의를 요구할 수 있습니다.</p></div>`;}
- const notices=bills.length?`<div class="presidential-status-grid">${statusHtml}</div>`:'<div class="gazette-wait"><h3>제출된 법률안이 없습니다.</h3><p>본회의에서 법률안 표결을 마친 뒤 진행해 주세요.</p></div>';
- return `<div class="panel"><div class="spread"><h2>🏛 대통령의 법률안 공포 · 선택형 재의요구</h2><span class="chip">7단계 · 기본 50분 + 선택 활동</span></div><p class="intro">대통령은 가결된 법률안마다 <b>바로 공포</b>하거나 <b>재의요구</b>할 수 있습니다. 재의요구를 선택하지 않으면 이전과 똑같이 관보 발행으로 마무리됩니다.</p>${presidentialInfo()}<div class="teacher-metrics gazette-metrics"><div class="stat"><small>최초 본회의 가결</small><b>${passed.length}</b></div><div class="stat"><small>대통령 재의요구</small><b>${vetoed.length}</b></div><div class="stat"><small>재의결 성공</small><b>${vetoed.filter(([id])=>reconsiderOf(id)?.status==='passed').length}</b></div><div class="stat"><small>모의 공포 완료</small><b>${published.length}</b></div></div><label for="gazetteChoice">대통령이 검토할 법률안 선택</label><select class="prez-selection" id="gazetteChoice" onchange="setGazetteSelection(this.value)" ${!!openVoteId?'disabled':''}>${selectable?bills.map(([id,g])=>`<option value="${E(id)}" ${chosen===id?'selected':''}>${E(id)}모둠 · ${E(getCase(g.caseId)?.law||'법률안')} · ${E(lawStatus(id))}</option>`).join(''):'<option value="">제출된 법률안 없음</option>'}</select>${openVoteId?`<div class="small-warn">${E(openVoteId)}모둠의 국회 재표결이 진행 중입니다. 표결을 종료한 후 다른 법률안을 선택할 수 있습니다.</div>`:''}${g&&c?`<div class="bill-front"><div class="spread"><h2>${E(c.law)} 일부개정법률안</h2><span class="chip">${E(chosen)}모둠 · ${E(c.article)}</span></div><div class="bill-compare"><div class="compare-old"><b>현행 조항</b><div class="pre">${E(c.original)}</div></div><div class="compare-new"><b>국회에서 의결한 개정안</b><div class="pre">${E(g.amend)}</div></div></div><p><b>입법 취지:</b> ${E(g.reason)}</p></div>`:''}<h3 style="margin-top:22px">${E(choiceStatus)}</h3>${actions}<hr class="revote-divider"><h3>법률안별 처리 현황</h3>${notices}<hr class="revote-divider"><h3>대통령 공포 · 모의 관보</h3>${published.length?published.map(([id])=>gazettePaper(id)).join(''):'<div class="gazette-wait"><h3>아직 발행된 관보가 없습니다.</h3><p>통과한 법률안 중 공포를 선택하거나, 재의결에 성공한 법률안을 공포하면 이곳에 관보가 나타납니다.</p></div>'}</div>`;
+ const notices=bills.length?`<div class="presidential-status-grid">${statusHtml}</div>`:'<div class="gazette-wait"><h3>확정된 위원회 법률안이 없습니다.</h3><p>본회의에서 법률안 표결을 마친 뒤 진행해 주세요.</p></div>';
+ return `<div class="panel"><div class="spread"><h2>🏛 대통령의 법률안 공포 · 선택형 재의요구</h2><span class="chip">7단계 · 기본 50분 + 선택 활동</span></div><p class="intro">대통령은 가결된 법률안마다 <b>바로 공포</b>하거나 <b>재의요구</b>할 수 있습니다. 재의요구를 선택하지 않으면 이전과 똑같이 관보 발행으로 마무리됩니다.</p>${presidentialInfo()}<div class="teacher-metrics gazette-metrics"><div class="stat"><small>최초 본회의 가결</small><b>${passed.length}</b></div><div class="stat"><small>대통령 재의요구</small><b>${vetoed.length}</b></div><div class="stat"><small>재의결 성공</small><b>${vetoed.filter(([id])=>reconsiderOf(id)?.status==='passed').length}</b></div><div class="stat"><small>모의 공포 완료</small><b>${published.length}</b></div></div><label for="gazetteChoice">대통령이 검토할 법률안 선택</label><select class="prez-selection" id="gazetteChoice" onchange="setGazetteSelection(this.value)" ${!!openVoteId?'disabled':''}>${selectable?bills.map(([id,g])=>`<option value="${E(id)}" ${chosen===id?'selected':''}>${E(groupLabel(id,true))} · ${E(getCase(g.caseId)?.law||'법률안')} · ${E(lawStatus(id))}</option>`).join(''):'<option value="">확정된 위원회 법률안 없음</option>'}</select>${openVoteId?`<div class="small-warn">${E(groupLabel(openVoteId,true))}의 국회 재표결이 진행 중입니다. 표결을 종료한 후 다른 법률안을 선택할 수 있습니다.</div>`:''}${g&&c?`<div class="bill-front"><div class="spread"><h2>${E(c.law)} 일부개정법률안</h2><span class="chip">${E(groupLabel(chosen,true))} · ${E(c.article)}</span></div><div class="bill-compare"><div class="compare-old"><b>현행 조항</b><div class="pre">${E(c.original)}</div></div><div class="compare-new"><b>국회에서 의결한 개정안</b><div class="pre">${E(g.amend)}</div></div></div><p><b>입법 취지:</b> ${E(g.reason)}</p></div>`:''}<h3 style="margin-top:22px">${E(choiceStatus)}</h3>${actions}<hr class="revote-divider"><h3>법률안별 처리 현황</h3>${notices}<hr class="revote-divider"><h3>대통령 공포 · 모의 관보</h3>${published.length?published.map(([id])=>gazettePaper(id)).join(''):'<div class="gazette-wait"><h3>아직 발행된 관보가 없습니다.</h3><p>통과한 법률안 중 공포를 선택하거나, 재의결에 성공한 법률안을 공포하면 이곳에 관보가 나타납니다.</p></div>'}</div>`;
 }
 function studentReconsideration(){
  const id=state.reconsiderationActive,r=reconsiderOf(id),g=state.groups[id],c=getCase(g?.caseId),m=me();
@@ -971,12 +1043,12 @@ function studentReconsideration(){
  else if(r.status==='voting'&&selected){const cls=selected==='찬성'?'yes':selected==='반대'?'no':'abs';inner=`<div class="ballot-stage"><div class="receipt"><span class="chip done">✓ 재표결 기록 완료</span><h2>${E(m.name)} 의원님의 재의결 표결</h2><div class="receipt-choice ${cls}">[${E(selected)}]</div><p>대통령 재의요구를 받은 법률안에 대한 표결입니다. 표결 종료 전에는 선택을 변경할 수 있습니다.</p><button class="outline" onclick="cancelReconsideration()">↶ 선택 취소하고 다시 투표하기</button></div></div>`;}
  else if(r.status==='voting')inner=`<div class="ballot-stage"><span class="chip dark">재의결 전자표결 진행 중</span><div class="ballot-title">${E(m.name)} 의원님, 대통령이 재의를 요구한<br>법률안에 다시 투표해 주세요.</div><p class="ballot-question">처음 가결될 때와 달리 이번에는 출석의원 3분의 2 이상의 찬성이 필요합니다.</p><div class="vote-circles"><button class="vote-circle yes" onclick="castReconsideration('찬성')">찬성<small>법률안 재확정</small></button><button class="vote-circle no" onclick="castReconsideration('반대')">반대<small>재확정 반대</small></button><button class="vote-circle abs" onclick="castReconsideration('기권')">기권<small>의사표시 보류</small></button></div></div>`;
  else {const d=revoteDecision(id),t=revoteThreshold(id);inner=`<div class="revote-result">${E(d.title)}</div><p class="revote-explain">${E(d.explanation)}<br>재표결: 참여 ${t.total}명 · 찬성 ${t.yes}명 · 반대 ${t.no}명 · 기권 ${t.abs}명</p>${r.status==='passed'?'<div class="note-bar">재의결에 성공했습니다. 교사가 대통령 명의로 모의 공포하면 관보에서 확인할 수 있습니다.</div>':''}${r.status==='quorum'?'<div class="small-warn">재적의원 과반수가 출석하지 않아 표결이 성립하지 않았습니다. 교사가 다시 열 수 있습니다.</div>':''}`;}
- return `<div class="panel"><div class="spread"><h2>🏛 대통령 재의요구 · 국회 재의결</h2><span class="chip wait">${E(id)}모둠 안건 · ${E(r.status==='voting'?'재표결 진행':r.status==='requested'?'재표결 대기':'결과 확인')}</span></div>${presidentialInfo()}${returnLetter(id)}<div class="bill-front"><h3>다시 표결할 원래 법률안</h3><p class="intro">헌법 제53조에 따라 법안 내용을 바꾸지 않고 원안 그대로 다시 표결합니다.</p><div class="bill-compare"><div class="compare-old"><b>기존 법률</b><div class="pre">${E(c.original)}</div></div><div class="compare-new"><b>국회가 처음 통과시킨 법률안</b><div class="pre">${E(g.amend)}</div></div></div></div>${inner}${['passed','failed','quorum'].includes(r.status)?studentVoteResultsBoard('revote',id):''}</div>`;
+ return `<div class="panel"><div class="spread"><h2>🏛 대통령 재의요구 · 국회 재의결</h2><span class="chip wait">${E(groupLabel(id,true))} 안건 · ${E(r.status==='voting'?'재표결 진행':r.status==='requested'?'재표결 대기':'결과 확인')}</span></div>${presidentialInfo()}${returnLetter(id)}<div class="bill-front"><h3>다시 표결할 원래 법률안</h3><p class="intro">헌법 제53조에 따라 법안 내용을 바꾸지 않고 원안 그대로 다시 표결합니다.</p><div class="bill-compare"><div class="compare-old"><b>기존 법률</b><div class="pre">${E(c.original)}</div></div><div class="compare-new"><b>국회가 처음 통과시킨 법률안</b><div class="pre">${E(g.amend)}</div></div></div></div>${inner}${['passed','failed','quorum'].includes(r.status)?studentVoteResultsBoard('revote',id):''}</div>`;
 }
 function studentGazette(){
  const published=publishedGroups(),bills=allGroups().filter(([,g])=>g.submitted);
- const notices=bills.map(([id,g])=>`<div class="presidential-status ${state.promulgations[id]?'passed':reconsiderOf(id)?.status==='failed'?'failed':''}"><strong>${E(id)}모둠 · ${E(getCase(g.caseId)?.law||'법률안')}</strong><small>${E(lawStatus(id))}</small></div>`).join('');
- return `${studentReconsideration()}<div class="panel"><div class="spread"><h2>📜 대통령의 법률 공포 · 모의 관보</h2><span class="chip">입법 절차의 마무리</span></div>${presidentialInfo()}<p class="intro">재의요구를 하지 않은 법률안은 대통령 명의로 바로 공포할 수 있습니다. 재의요구한 법률안은 국회 재의결에 성공해야 공포할 수 있습니다.</p><h3>안건별 최종 처리 현황</h3><div class="presidential-status-grid">${notices||'<div class="tiny">제출된 법률안이 없습니다.</div>'}</div><hr class="revote-divider"><h3>모의 관보</h3>${published.length?published.map(([id])=>gazettePaper(id)).join(''):'<div class="gazette-wait"><h3>아직 대통령이 공포한 법률이 없습니다.</h3><p>교사가 공포하면 법률 전문과 부칙을 포함한 수업용 관보가 여기에 나타납니다.</p></div>'}</div>`;
+ const notices=bills.map(([id,g])=>`<div class="presidential-status ${state.promulgations[id]?'passed':reconsiderOf(id)?.status==='failed'?'failed':''}"><strong>${E(groupLabel(id,true))} · ${E(getCase(g.caseId)?.law||'법률안')}</strong><small>${E(lawStatus(id))}</small></div>`).join('');
+ return `${studentReconsideration()}<div class="panel"><div class="spread"><h2>📜 대통령의 법률 공포 · 모의 관보</h2><span class="chip">입법 절차의 마무리</span></div>${presidentialInfo()}<p class="intro">재의요구를 하지 않은 법률안은 대통령 명의로 바로 공포할 수 있습니다. 재의요구한 법률안은 국회 재의결에 성공해야 공포할 수 있습니다.</p><h3>안건별 최종 처리 현황</h3><div class="presidential-status-grid">${notices||'<div class="tiny">확정된 위원회 법률안이 없습니다.</div>'}</div><hr class="revote-divider"><h3>모의 관보</h3>${published.length?published.map(([id])=>gazettePaper(id)).join(''):'<div class="gazette-wait"><h3>아직 대통령이 공포한 법률이 없습니다.</h3><p>교사가 공포하면 법률 전문과 부칙을 포함한 수업용 관보가 여기에 나타납니다.</p></div>'}</div>`;
 }
 // ===== 선택형 재의요구 기능 끝 =====
 
@@ -1049,15 +1121,15 @@ function renderStudent(){
  if(!me()){root.innerHTML=entry();return;}
  const p=studentPhase();
  const activity=[committeeScreen,readingScreen,writingScreen,reviewScreen,submitScreen,studentPlenary,studentGazette][p]();
- root.innerHTML=memberHeader()+`<div class="edition-intro"><div class="edition-top"><strong>고등학교 입법 심화활동</strong><span class="time-chip">현재 단계 ${FLOW_TIMES[p]}분 / 전체 50분</span></div><p>현행법 분석 → 일부개정안 입안 → 체계·자구 심사 → 본회의 의결 → 법률 공포의 절차를 실습합니다.</p></div>`+studentRails()+recoveryBar()+(p===2||p===3||p===4?inputSyncBar():'')+activity+academicGlossary();
+ root.innerHTML=memberHeader()+`<div class="edition-intro"><div class="edition-top"><strong>고등학교 입법 심화활동</strong><span class="time-chip">현재 단계 ${FLOW_TIMES[p]}분 / 전체 50분</span></div><p>현행법 분석 → 일부개정안 입안 → 법사위 체계·자구 심사 → 본회의 의결 → 법률 공포의 절차를 실습합니다.</p></div>`+studentRails()+recoveryBar()+(p===2||p===3||p===4?inputSyncBar():'')+activity+academicGlossary();
 }
 const PHASE_RESET_DESCRIPTIONS=[
  '상임위원회 선택 결과와 확정 표시만 초기화합니다. 이후 단계에서 법안 작성이 시작된 경우에는 초기화를 막습니다.',
  '기사·조문 탐구 단계의 의원별 완료 표시만 지웁니다. 위원회·법안은 유지합니다.',
- '개정 조문·입법 취지·시행일·작성 완료 표시를 초기화합니다. 검토·제출 기록이 있으면 보호를 위해 차단합니다.',
+ '개정 조문·입법 취지·시행일·작성 완료 표시를 초기화합니다. 검토·확정 기록이 있으면 보호를 위해 차단합니다.',
  '체계·자구 검토 기록과 해당 단계의 완료 표시만 초기화합니다. 작성한 개정 문장은 유지합니다.',
- '의원별 최종안 확인 표시와 조장 제출 상태를 초기화합니다. 실제 표결이 있었다면 차단합니다.',
- '본회의의 최초 전자표결 기록과 진행 상황만 초기화합니다. 제출된 법률안은 유지합니다.',
+ '의원별 최종안 확인 표시와 위원장 최종 확정 상태를 초기화합니다. 실제 표결이 있었다면 차단합니다.',
+ '본회의의 최초 전자표결 기록과 진행 상황만 초기화합니다. 최종 확정된 법률안은 유지합니다.',
  '대통령의 재의요구·재의결 기록과 모의 관보만 초기화합니다. 최초 본회의 표결은 유지합니다.'
 ];
 function teacherPhaseResetPanel(){
@@ -1072,9 +1144,9 @@ function resetPhase(p){
  const hasPresidential=Object.keys(state.promulgations||{}).length>0||Object.keys(state.reconsiderations||{}).length>0;
  if([0,2,3].includes(p)&&(hasVote||hasPresidential))return alert('이미 본회의 표결 또는 대통령 단계 기록이 있어 이전 단계 자료만 초기화할 수 없습니다. 관련된 후속 단계를 먼저 정리하세요.');
  if(p===0&&gvalues.some(g=>!!g.amend||!!g.reason||g.reviewed||g.submitted||[1,2,3,4].some(phase=>Object.values(g.memberDone?.[phase]||{}).some(Boolean))))return alert('이미 법안 작성이 시작되어 상임위원회만 지우면 조문의 출처가 달라질 수 있습니다. 기존 법안을 보존하기 위해 초기화하지 않았습니다.');
- if(p===2&&gvalues.some(g=>g.reviewed||g.submitted||g.reviewChoice||[3,4].some(phase=>Object.values(g.memberDone?.[phase]||{}).some(Boolean))))return alert('법사위 심사나 최종 제출 기록이 있습니다. 작성 내용만 지우면 후속 단계 기록과 모순되므로 초기화를 차단했습니다.');
- if(p===3&&gvalues.some(g=>g.submitted||Object.values(g.memberDone?.[4]||{}).some(Boolean)))return alert('이미 최종 제출된 법안이 있어 검토 기록만 초기화할 수 없습니다.');
- if(p===4&&hasVote)return alert('이미 본회의 표결 기록이 있습니다. 제출 상태만 초기화하면 해당 표결의 법적 근거가 사라지므로 초기화를 차단했습니다.');
+ if(p===2&&gvalues.some(g=>g.reviewed||g.submitted||g.reviewChoice||[3,4].some(phase=>Object.values(g.memberDone?.[phase]||{}).some(Boolean))))return alert('법사위 심사나 모둠 최종 확정 기록이 있습니다. 작성 내용만 지우면 후속 단계 기록과 모순되므로 초기화를 차단했습니다.');
+ if(p===3&&gvalues.some(g=>g.submitted||Object.values(g.memberDone?.[4]||{}).some(Boolean)))return alert('이미 최종 확정된 모둠 법률안이 있어 검토 기록만 초기화할 수 없습니다.');
+ if(p===4&&hasVote)return alert('이미 본회의 표결 기록이 있습니다. 모둠의 최종 확정 상태만 초기화하면 해당 표결의 법적 근거가 사라지므로 초기화를 차단했습니다.');
  if(p===5&&hasPresidential)return alert('재의요구·재의결·공포 기록이 있어 최초 본회의 투표만 초기화할 수 없습니다. 대통령 단계(7단계)를 먼저 초기화하세요.');
  const label=`${p+1}단계 · ${PHASES[p]}`;
  if(!confirm(`[${label}]의 활동 기록만 초기화할까요?\n${PHASE_RESET_DESCRIPTIONS[p]}\n\n다른 단계 기록은 원칙적으로 유지하며, 초기화한 기록은 되돌릴 수 없습니다.`))return;
@@ -1092,7 +1164,7 @@ function resetPhase(p){
 // ===== 수업 단계 진행 안정화 끝 =====
 
 // ===== Supabase 공동수업 버전 : 동작하는 서버 저장 / 교사 인증 =====
-// 이 파일은 선택형 재의요구, 자동·수동 단계 이동, 최종확인/제출 구분 로직 위에 얹힙니다.
+// 이 파일은 선택형 재의요구, 자동·수동 단계 이동, 최종확인/확정 구분 로직 위에 얹힙니다.
 // 서버에 SQL을 설치하지 않은 상태에서는 원격 저장이 된 것처럼 표시하지 않습니다.
 const MOCKLAW_CONFIG = {
   url: 'https://pwgjmgywlmznrvmcexvf.supabase.co',
@@ -1339,17 +1411,30 @@ async function cloudTeacherOpenRoom(){
 }
 entry=function(){
  let html=originalCloudEntry();
- html=html.replace('<div class="two"><div><label for="joinGroup">',`<label for="joinRoom">수업 방 코드</label><input id="joinRoom" maxlength="24" value="" placeholder="교사가 알려준 방 코드"><div class="two"><div><label for="joinGroup">`);
+ html=html.replace('<div class="two"><div><label for="joinGroup">',`<label for="joinRoom">수업 방 코드</label><input id="joinRoom" maxlength="24" value="" placeholder="교사가 알려준 방 코드" oninput="updateJoinRoleLabel()"><div class="two"><div><label for="joinGroup">`);
  html=html.replace('현재 파일은 같은 브라우저에서만 공동 데이터가 공유되며, 실제 기기 간 동기화는 나중에 연결해야 합니다.','이름 확인 절차 없이 바로 참여합니다. 저장·표결은 Supabase 서버에 기록됩니다.');
  return html;
 };
+// 단계 이동으로 화면 내용이 바뀐 경우에만 스크롤을 맨 위로 복구합니다.
+// 실시간 동기화, 투표 집계, 자동 저장 등 같은 단계의 갱신에서는 위치를 유지합니다.
+let lastDisplayedPhase = null;
 renderStudent=function(){
  if(!cloudConfigured()||!window.supabase){el('student').innerHTML=cloudSetupMessage();return;}
  originalCloudRenderStudent();
+ if(!me())updateJoinRoleLabel();
  const node=el('student');
  if(node){
   node.innerHTML=node.innerHTML.replace('교사가 단계를 변경하면 화면이 자동 전환됩니다(같은 브라우저 내).','교사가 단계를 변경하면 서버에서 자동으로 수신합니다.');
  }
+ // 학생용 수동 복구 이동도 studentPhase()에 반영되므로 동일하게 처리합니다.
+ const displayedPhase = me() ? studentPhase() : state.phase;
+ if(lastDisplayedPhase!==null && lastDisplayedPhase!==displayedPhase){
+  window.requestAnimationFrame(()=>{
+   const stillOnThisPhase= (me()?studentPhase():state.phase)===displayedPhase;
+   if(stillOnThisPhase)window.scrollTo(0,0);
+  });
+ }
+ lastDisplayedPhase=displayedPhase;
 };
 renderTeacher=function(){
  if(!cloudConfigured()||!window.supabase){el('teacher').innerHTML=cloudSetupMessage();return;}
@@ -1453,10 +1538,10 @@ saveManual=async function(){
  if(result)cloudApply(result,true);
 };
 submitBill=async function(){
- if(!isLeader())return alert('법안 최종 제출은 조장만 할 수 있습니다.');
+ if(!isLeader())return alert(`법률안 최종 확정은 ${roleLabel(myNum())}만 할 수 있습니다.`);
  const g=myGroup(),progress=memberPhaseProgress(myNum(),g,4);
- if(progress.completed.length<progress.members.length&&!confirm('아직 모든 모둠원이 최종 확인하지 않았습니다. 그래도 제출할까요?'))return;
- if(!confirm('최종 법률안을 제출할까요? 이후에는 수정할 수 없습니다.'))return;
+ if(progress.completed.length<progress.members.length&&!confirm('아직 모든 모둠원이 최종 확인하지 않았습니다. 그래도 최종 확정할까요?'))return;
+ if(!confirm(`${groupLabel(myNum())} 법률안을 최종 확정할까요? 이후에는 수정할 수 없습니다.`))return;
  const result=await cloudCmd('submit_bill',{},'student',{immediate:true});
  if(result)cloudApply(result,true);
 };
@@ -1473,7 +1558,7 @@ teacherStep=async function(delta){
   if(!confirm(`${to+1}단계 「${PHASES[to]}」로 돌아갈까요?\n\n${warning}\n\n학생들이 그 단계를 다시 수행할 수 있습니다.`))return;
  }else if(from<=4){
   const notDone=allGroups().filter(([no,g])=>!groupPhaseComplete(no,g,from));
-  if(notDone.length&&!confirm('아직 '+notDone.map(([no])=>no+'모둠').join(', ')+'이 현재 단계를 완료하지 않았습니다. 그래도 이동할까요?'))return;
+  if(notDone.length&&!confirm('아직 '+notDone.map(([no])=>groupLabel(no,true)).join(', ')+'이 현재 단계를 완료하지 않았습니다. 그래도 이동할까요?'))return;
  }else if(from===5&&state.voteOpen&&!confirm('진행 중인 표결을 종료하고 공포 단계로 갈까요?'))return;
  const result=await cloudCmd('teacher_step',{delta},'teacher',{immediate:true});
  if(result)cloudApply(result,true);
@@ -1487,13 +1572,13 @@ startVote=async()=>{
 };
 endVote=async()=>{const result=await cloudCmd('teacher_end_vote',{},'teacher',{immediate:true});if(result)cloudApply(result,true);};
 teacherSetLeader=async(no,id)=>{
- if(!confirm(`${no}모둠의 조장을 ${id?state.members[id]?.name||'선택한 의원':'없음'}으로 변경할까요?`))return;
+ if(!confirm(`${groupLabel(no,true)}의 ${roleLabel(no)}을 ${id?state.members[id]?.name||'선택한 의원':'없음'}으로 변경할까요?`))return;
  const result=await cloudCmd('teacher_set_leader',{group:no,user_id:id},'teacher',{immediate:true});if(result)cloudApply(result,true);
 };
 setGazetteSelection=async group=>{const result=await cloudCmd('teacher_select_gazette',{group},'teacher',{immediate:true});if(result)cloudApply(result,true);};
 selectGazette=setGazetteSelection;
 requestReconsideration=async group=>{
- if(!confirm(`${group}모둠의 가결 법률안에 대해 대통령의 재의를 요구하고 국회 재표결 절차로 넘어갈까요?\n이유 입력 없이 시연합니다.`))return;
+ if(!confirm(`${groupLabel(group,true)}의 가결 법률안에 대해 대통령의 재의를 요구하고 국회 재표결 절차로 넘어갈까요?\n이유 입력 없이 시연합니다.`))return;
  const result=await cloudCmd('teacher_reconsider',{group},'teacher',{immediate:true});if(result)cloudApply(result,true);
 };
 beginReconsideration=async group=>{
@@ -1505,7 +1590,7 @@ endReconsideration=async group=>{
  const result=await cloudCmd('teacher_end_revote',{group},'teacher',{immediate:true});if(result)cloudApply(result,true);
 };
 promulgateLaw=async group=>{
- if(!confirm(`${group}모둠 법률안을 대통령 명의로 모의 공포할까요? 실제 효력 없는 교육용 관보가 발행됩니다.`))return;
+ if(!confirm(`${groupLabel(group,true)} 법률안을 대통령 명의로 모의 공포할까요? 실제 효력 없는 교육용 관보가 발행됩니다.`))return;
  const result=await cloudCmd('teacher_promulgate',{group},'teacher',{immediate:true});if(result)cloudApply(result,true);
 };
 resetPhase=async function(p){
@@ -1551,6 +1636,193 @@ if(!el('cloudConnectionStatus')){
 }
 const oldCloudSwitchTab=switchTab;
 switchTab=function(where){oldCloudSwitchTab(where);if(cloudRoomReady){cloudStartRealtime();cloudFetch();}};
+
+// MOCKLAW_SPEECH_TIMER_SLOT_V2
+// Teacher starts, pauses, resumes and resets a 60s timer using room-scoped Realtime Broadcast.
+// Student sees a read-only clock within the existing proposal speech panel.
+// The server schema, original vote RPC, and original teacher dashboard remain untouched.
+const SPEECH_DURATION_MS=60000;
+const SPEECH_DONE='\uBC1C\uC5B8 \uC2DC\uAC04\uC774 \uC885\uB8CC\uB418\uC5C8\uC2B5\uB2C8\uB2E4.';
+let speechState=null,speechChannel=null,speechChannelRoom='',speechChannelClient=null,speechConnected=false;
+function speechCacheKey(){return 'mocklaw_speech_v1_'+cloudRoom;}
+function speechStore(){
+ if(!cloudRoom||!speechState)return;
+ try{localStorage.setItem(speechCacheKey(),JSON.stringify(speechState));}catch(e){}
+}
+function speechRestore(){
+ speechState=null;
+ if(!cloudRoom)return;
+ try{
+  const value=JSON.parse(localStorage.getItem(speechCacheKey())||'null');
+  if(value&&value.room===cloudRoom&&Number.isFinite(Number(value.seq)))speechState=value;
+ }catch(e){}
+}
+function speechCurrent(){
+ return cloudRoomReady&&state.phase===5&&!state.voteOpen&&!state.voteEnded&&
+        speechState&&speechState.room===cloudRoom&&String(speechState.motion)===String(state.activeMotion)?speechState:null;
+}
+function speechStatus(){
+ const x=speechCurrent();
+ if(!x||x.mode==='ready')return {seconds:60,mode:'ready',remainingMs:SPEECH_DURATION_MS};
+ if(x.mode==='paused'){
+  const remainingMs=Math.max(0,Math.min(SPEECH_DURATION_MS,Number(x.remainingMs)||0));
+  return {seconds:Math.ceil(remainingMs/1000),mode:remainingMs>0?'paused':'ended',remainingMs};
+ }
+ const remainingMs=Math.max(0,Math.min(SPEECH_DURATION_MS,Number(x.until)-Date.now()));
+ return {seconds:Math.ceil(remainingMs/1000),mode:remainingMs>0?'running':'ended',remainingMs};
+}
+function speechClockString(sec){return String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');}
+function speechTimerHtml(role){
+ const z=speechStatus();
+ const title=role==='teacher'?'\uC81C\uC548 \uC124\uBA85 \uC2DC\uAC04':'\uB0A8\uC740 \uBC1C\uC5B8 \uC2DC\uAC04';
+ const info=z.mode==='ended'?SPEECH_DONE:z.mode==='paused'?'\uC77C\uC2DC\uC815\uC9C0\uB428':z.mode==='running'?'\uBC1C\uC5B8 \uC9C4\uD589 \uC911':'\uAD50\uC0AC\uC758 \uC2DC\uC791\uC744 \uB300\uAE30\uD569\uB2C8\uB2E4';
+ return `<div class="speech-timer ${role} ${z.mode}" data-speech-clock="${role}" aria-live="polite"><div class="speech-timer-label">${title} \u00B7 1\uBD84</div><div class="speech-timer-time">${speechClockString(z.seconds)}</div><div class="speech-timer-state">${info}</div></div>`;
+}
+function speechControlsHtml(){
+ return `<span class="speech-timer-controls" aria-label="\uC81C\uC548 \uC124\uBA85 \uD0C0\uC774\uBA38 \uC870\uC791">
+ <button type="button" class="soft" data-speech-action="start" onclick="speechStart()">\u25B6 1\uBD84 \uC2DC\uC791</button>
+ <button type="button" class="outline" data-speech-action="pause" onclick="speechPause()">\u23F8 \uC77C\uC2DC\uC815\uC9C0</button>
+ <button type="button" class="outline" data-speech-action="reset" onclick="speechReset()">\u21BA \uCD08\uAE30\uD654</button>
+ </span>`;
+}
+function speechTick(){
+ const z=speechStatus();
+ document.querySelectorAll('[data-speech-clock]').forEach(n=>{
+  const v=n.querySelector('.speech-timer-time'),info=n.querySelector('.speech-timer-state');
+  if(v)v.textContent=speechClockString(z.seconds);
+  if(info)info.textContent=z.mode==='ended'?SPEECH_DONE:z.mode==='paused'?'\uC77C\uC2DC\uC815\uC9C0\uB428':z.mode==='running'?'\uBC1C\uC5B8 \uC9C4\uD589 \uC911':'\uAD50\uC0AC\uC758 \uC2DC\uC791\uC744 \uB300\uAE30\uD569\uB2C8\uB2E4';
+  n.classList.toggle('running',z.mode==='running');n.classList.toggle('paused',z.mode==='paused');n.classList.toggle('ended',z.mode==='ended');
+ });
+ const active=!!(cloudTeacherAuthorized&&state.phase===5&&!state.voteOpen&&!state.voteEnded&&state.activeMotion);
+ document.querySelectorAll('[data-speech-action]').forEach(b=>{
+  const action=b.dataset.speechAction;
+  b.disabled=!active||(action==='pause'&&z.mode!=='running')||(action==='start'&&z.mode==='running');
+  if(action==='start')b.textContent=z.mode==='paused'?'\u25B6 \uC7AC\uAC1C':z.mode==='ended'?'\u21BA 1\uBD84 \uB2E4\uC2DC \uC2DC\uC791':'\u25B6 1\uBD84 \uC2DC\uC791';
+ });
+}
+function speechClose(){
+ if(speechChannel&&speechChannelClient){try{speechChannelClient.removeChannel(speechChannel);}catch(e){}}
+ speechChannel=null;speechChannelRoom='';speechChannelClient=null;speechConnected=false;
+}
+function speechReceive(msg){
+ const p=msg?.payload;if(!p||p.room!==cloudRoom||!['ready','running','paused'].includes(p.mode))return;
+ const seq=Number(p.seq),motion=String(p.motion||'');if(!Number.isFinite(seq)||!motion)return;
+ if(speechState&&speechState.room===cloudRoom&&Number(speechState.seq)>seq)return;
+ if(speechState&&speechState.room===cloudRoom&&Number(speechState.seq)===seq&&speechState.motion!==motion)return;
+ let remainingMs;
+ if(p.mode==='running')remainingMs=Math.max(0,Math.min(SPEECH_DURATION_MS,Number(p.until)-Number(p.sentAt)));
+ else if(p.mode==='paused')remainingMs=Math.max(0,Math.min(SPEECH_DURATION_MS,Number(p.remainingMs)));
+ else remainingMs=SPEECH_DURATION_MS;
+ if(!Number.isFinite(remainingMs))return;
+ speechState={room:cloudRoom,motion,mode:p.mode,remainingMs:p.mode==='paused'?remainingMs:SPEECH_DURATION_MS,
+              until:p.mode==='running'?Date.now()+remainingMs:0,seq};
+ speechStore();speechTick();
+}
+async function speechSend(){
+ if(!speechConnected||!speechChannel||!speechState||speechState.room!==cloudRoom)return false;
+ try{return (await speechChannel.send({type:'broadcast',event:'speech_sync',payload:{...speechState,sentAt:Date.now()}}))==='ok';}
+ catch(e){console.warn('Speech timer broadcast failed',e);return false;}
+}
+function speechEnsureChannel(){
+ if(!cloudRoomReady||!cloudRoom||!cloudStudent)return;
+ if(speechChannel&&speechChannelRoom===cloudRoom)return;
+ speechClose();speechChannelRoom=cloudRoom;speechChannelClient=cloudStudent;
+ const ch=cloudStudent.channel('mocklaw-speech-'+cloudRoom,{config:{broadcast:{self:false,ack:true}}});
+ speechChannel=ch;
+ ch.on('broadcast',{event:'speech_sync'},speechReceive);
+ ch.on('broadcast',{event:'speech_request'},msg=>{
+  if(cloudTeacherAuthorized&&msg?.payload?.room===cloudRoom&&speechState?.room===cloudRoom)speechSend();
+ });
+ ch.subscribe(status=>{
+  if(speechChannel!==ch)return;
+  speechConnected=status==='SUBSCRIBED';
+  if(speechConnected){
+   if(cloudTeacherAuthorized&&speechState?.room===cloudRoom)speechSend();
+   else ch.send({type:'broadcast',event:'speech_request',payload:{room:cloudRoom}}).catch(()=>{});
+  }
+ });
+}
+function speechSet(mode,remainingMs){
+ if(!cloudTeacherAuthorized||state.phase!==5||state.voteOpen||state.voteEnded||!state.activeMotion)return false;
+ if(!speechConnected){speechEnsureChannel();alert('\uD0C0\uC774\uBA38 \uB3D9\uAE30\uD654 \uC5F0\uACB0\uC744 \uD655\uC778\uD55C \uD6C4 \uB2E4\uC2DC \uB20C\uB7EC \uC8FC\uC138\uC694.');return false;}
+ const ms=Math.max(0,Math.min(SPEECH_DURATION_MS,remainingMs??SPEECH_DURATION_MS));
+ speechState={room:cloudRoom,motion:String(state.activeMotion),mode,until:mode==='running'?Date.now()+ms:0,
+              remainingMs:mode==='paused'?ms:SPEECH_DURATION_MS,seq:Math.max(Date.now(),Number(speechState?.seq||0)+1)};
+ speechStore();speechSend().then(ok=>{if(!ok)console.warn('Speech timer connection needs a retry.');});
+ speechTick();return true;
+}
+function speechStart(){
+ const old=speechCurrent(),z=speechStatus();
+ const ms=old?.mode==='paused'&&z.remainingMs>0?z.remainingMs:SPEECH_DURATION_MS;
+ speechSet('running',ms);
+}
+function speechPause(){
+ const x=speechCurrent(),z=speechStatus();
+ if(!x||z.mode!=='running')return;
+ speechSet('paused',z.remainingMs);
+}
+function speechReset(){speechSet('ready',SPEECH_DURATION_MS);}
+function speechAutoClear(){
+ if(!cloudTeacherAuthorized||!cloudRoom||!speechConnected)return;
+ speechState={room:cloudRoom,motion:String(state.activeMotion),mode:'ready',until:0,remainingMs:SPEECH_DURATION_MS,
+              seq:Math.max(Date.now(),Number(speechState?.seq||0)+1)};
+ speechStore();speechSend();speechTick();
+}
+const speechOldSetRoom=cloudSetRoom;
+cloudSetRoom=function(v){
+ const old=cloudRoom,ok=speechOldSetRoom(v);
+ if(ok&&old!==cloudRoom){speechClose();speechRestore();}
+ return ok;
+};
+const speechOldStartRealtime=cloudStartRealtime;
+cloudStartRealtime=function(){speechOldStartRealtime();speechEnsureChannel();};
+const speechOldSetMotion=teacherSetMotion;
+teacherSetMotion=async function(no){
+ const old=state.activeMotion;
+ await speechOldSetMotion(no);
+ if(state.activeMotion!==old&&state.phase===5&&cloudTeacherAuthorized&&state.activeMotion)speechAutoClear();
+};
+const speechOldNextMotion=nextUnvotedMotion;
+nextUnvotedMotion=async function(){
+ const old=state.activeMotion;
+ await speechOldNextMotion();
+ if(state.activeMotion!==old&&state.phase===5&&cloudTeacherAuthorized&&state.activeMotion)speechAutoClear();
+};
+const speechOldStartVote=startVote;
+startVote=async function(){await speechOldStartVote();if(state.voteOpen)speechAutoClear();};
+// Preserve the original teacher board and all its bill/vote information.
+// Only exchange the seat-name area with the timer before voting begins.
+const speechOldBoardHtml=boardHtml;
+boardHtml=function(){
+ const html=speechOldBoardHtml();
+ if(state.phase!==5)return html;
+ const before=!!(state.activeMotion&&!state.voteOpen&&!state.voteEnded);
+ // Preserve the original board header, current bill, totals, verdict, and legend unchanged.
+ let result=html.replace('<div class="board">','<div class="board plenary-voting-board'+(before?' board-speech-before':'')+'">')
+                .replace('<div class="seatgrid">','<div class="seatgrid plenary-member-vote-area">');
+ if(before)result=result.replace('<div class="seatgrid plenary-member-vote-area">',speechTimerHtml('teacher')+'<div class="seatgrid plenary-member-vote-area">');
+ return result;
+};
+// Keep the original proposal speech heading and place the timer immediately below it.
+const speechOldStudentPlenary=studentPlenary;
+studentPlenary=function(){
+ const html=speechOldStudentPlenary();
+ if(state.phase!==5||!state.activeMotion||state.voteOpen||state.voteEnded)return html;
+ return html.replace('<p class="ballot-question">',speechTimerHtml('student')+'<p class="ballot-question">');
+};
+// Keep the original teacher controls; place timer buttons next to its vote-start button.
+const speechOldTeacherPlenary=teacherPlenary;
+teacherPlenary=function(){
+ const html=speechOldTeacherPlenary();
+ if(state.phase!==5||state.voteOpen||state.voteEnded)return html;
+ return html.replace('<button onclick="startVote()"',speechControlsHtml()+'<button onclick="startVote()"');
+};
+// Ticking updates the clock without rebuilding student text inputs or moving scroll.
+setInterval(speechTick,250);
+setInterval(()=>{
+ if(cloudTeacherAuthorized&&speechConnected&&state.phase===5&&!state.voteOpen&&!state.voteEnded&&speechCurrent())speechSend();
+},2500);
+
 render();
 cloudInit();
 // ===== Supabase 공동수업 버전 끝 =====
